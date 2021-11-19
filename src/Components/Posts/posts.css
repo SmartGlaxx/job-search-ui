@@ -1,0 +1,59 @@
+.posts{
+    width:100%;
+}
+.postContainer{
+    background: var(--background-color-2);
+    min-height: 5rem;
+    width: auto;
+    position: relative;
+    padding: var(--input-padding);
+    margin : 0.5rem 0;
+    box-shadow:
+    0px 14.3px 1.2px -7px rgba(0, 0, 0, 0.009),
+    0px 43px 51px -7px rgba(0, 0, 0, 0.07);
+}
+.name{
+    margin-left: 1rem;
+    font-size: 1.2rem;
+}
+.post-top{
+    display: flex;
+}
+.profile-pic{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border : 0.2rem solid var(--color);
+    object-fit: cover;
+}
+.description{
+    min-height: 3rem;
+    padding : var(--section-padding);
+    font-size: 0.9rem;
+}
+.more-btn{
+    padding: var(--btn-padding);
+    border: 1px solid var(--color);
+    border-radius: var(--btn-border-radius);
+    background: var(--background-color);
+    transition: all 0.4s;
+    cursor: pointer;
+}
+.more-btn:hover{
+    background: var(--background-color-2);
+}
+.icon-thumbsup{
+    color:#444;
+    cursor: pointer;
+    margin: 0 var(--icon-li-padding);
+    transition: all 0.4s;
+}
+.icon-thumbsup-liked{
+    color:#33f;
+    cursor: pointer;
+    margin: 0 var(--icon-li-padding);
+    transition: all 0.4s;
+}
+.icon-thumbsup:hover{
+    transform: scale(1.2);
+}
