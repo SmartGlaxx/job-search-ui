@@ -1,6 +1,5 @@
 .homepage{
     display: flex;
-
 }
 .homepage-left{
     flex : 3;
@@ -12,8 +11,10 @@
 }
 ::-webkit-scrollbar{
     width: 10px;
+    height: 10px;
 }
 ::-webkit-scrollbar-track{
+    height: 10px;
     background: var(--scrollbar-track)
 }
 ::-webkit-scrollbar-thumb{
