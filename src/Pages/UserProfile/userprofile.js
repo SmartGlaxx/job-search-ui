@@ -304,9 +304,9 @@ const usernameCpitalized = firstLetter.toUpperCase() + otherLettes
                       if(allUser._id !== _id && followings.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="connections-img"/>
+                                <img src={Profile} alt={username} className="follow-img"/>
                             </Link>
-                            <div className='connections-name'>{username}</div>
+                            <div className='follow-name'>{username}</div>
                             <form>
                                 <br/>
                                 <button onClick={(e)=>unfollow(e, id, username)} className='follow-btn'>{newUserFollowings.includes(allUser._id) ? `Unfollow` : `Follow`}</button>
@@ -333,9 +333,9 @@ const usernameCpitalized = firstLetter.toUpperCase() + otherLettes
                       if(allUser._id !== _id && followers.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="connections-img"/>
+                                <img src={Profile} alt={username} className="follow-img"/>
                             </Link>
-                            <div className='connections-name'>{username}</div>
+                            <div className='follow-name'>{username}</div>
                             <form>
                                 <br/>
                                 <button onClick={(e)=>unfollow(e, id, username)} className='follow-btn'>{ newUserFollowings.includes(allUser._id) ? `Unfollow` : `Follow`}</button>

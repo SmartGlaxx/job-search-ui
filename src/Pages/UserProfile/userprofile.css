@@ -48,7 +48,7 @@
     height: calc(100vh - 5rem);
     padding: var(--section-padding);
 }
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     width: 10px;
     height: 10px;
 }
@@ -57,7 +57,7 @@
 }
 ::-webkit-scrollbar-thumb{
     background: var(--scrollbar-thumb)
-}
+} */
 .profile-left-inner{
     height: 100%;
     overflow: auto;
@@ -260,19 +260,19 @@
     grid-template-columns: repeat(auto-fill, minmax(9rem, auto));
 }
 
-.connections-img{
+.follow-img{
     display: inline;
     width: 100%;
     height: calc(100% - 1rem);
     object-fit: cover;
 }
-.connections-name{
+.follow-name{
     position: absolute;
-    color:var(--color3);
-    bottom: 1.2rem;
+    color:var(--color4);
+    bottom: 1.5rem;
     width: 100%;
-    opacity: 0.8;
-    background : var(--background-color-4);
+    font-size: var(--button-font-size-20);
+    /* background : var(--background-color-4); */
     z-index: 2;
 }
 

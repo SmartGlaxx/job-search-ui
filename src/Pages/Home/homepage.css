@@ -9,17 +9,7 @@
     height: calc(100vh - 5rem);
     padding: var(--section-padding);
 }
-::-webkit-scrollbar{
-    width: 10px;
-    height: 10px;
-}
-::-webkit-scrollbar-track{
-    height: 10px;
-    background: var(--scrollbar-track)
-}
-::-webkit-scrollbar-thumb{
-    background: var(--scrollbar-thumb)
-}
+
 .homepage-left-inner{
     height: 100%;
     overflow: auto;

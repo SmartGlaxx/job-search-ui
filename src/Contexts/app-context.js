@@ -183,10 +183,10 @@ export const AppProvider = ({children})=>{
 
     //SET CURRENT USER
    const setCurrentUser = (value)=>{
-       console.log('val ue',value)
-        // localStorage.setItem('CurrentUser',JSON.stringify(value))
+      
+        localStorage.setItem('CurrentUser',JSON.stringify(value))
     //    localStorage.setItem('UserFollowings', JSON.stringify(value.followings))
-        // dispatch({type : CURRENTUSER, payload : value})
+        //dispatch({type : CURRENTUSER, payload : value})
     //    dispatch({type : SETCUSERFOLLOWINGS, payload : value.followings})
     }
 
