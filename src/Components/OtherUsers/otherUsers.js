@@ -7,6 +7,7 @@ import {Spinner} from 'react-bootstrap'
 import LoadingIcons from 'react-loading-icons'
 import Profile from "../../assets/profile.jfif"
 import { Link } from 'react-router-dom';
+import ProfileImage from '../../assets/profile.jpg'
 
 const OtherUsers = ()=>{
     const {loading, setNewCurrentUser, currentUser, currentUserParsed, setTempAllusers, tempAllUsers, allUsers, setLoading,
@@ -93,7 +94,7 @@ if(loading){
    </div>
 }
 
-    return<><div className='otherUsers'>
+    return<div style={{position:"relative"}}><div className='otherUsers'>
         {
             alertMsg.status && <div style={{position:"absolute", top:"20vh", background:"red", height : "40rem", width:"39rem"}}>ALERT</div> 
         }
@@ -105,14 +106,15 @@ if(loading){
                 <LoadingIcons.Puff stroke="#555" strokeOpacity={.9} />
             </div>: 
             tempAllUsers.map(allUser => {
-                const {_id : id, username} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followings} = currentUserParsed.followings ? currentUserParsed : JSON.parse(currentUser)
                       if(allUser._id !== _id && !followings.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follow-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} 
+                                 className="follow-img" style={{width:"6rem"}}/>
                             </Link>
-                            <div className='folow-name'>{username}</div>
+                            <div className='folow-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
                                 <button onClick={(e)=>follow(e, id, username)} className='follow-btn'>{ newUserFollowings.includes(allUser._id) ? `Followed` : `Follow`}</button>
@@ -124,8 +126,9 @@ if(loading){
         }
         </div>
     </div>
-    <button className='more-btn' onClick={()=>setRandomUsers(allUsers)}>Load More Users</button>
-    </>
+    <button className='more-btn' onClick={()=>setRandomUsers(allUsers)} 
+    style={{background:"var(--button-background)"}}>More Users</button>
+    </div>
 }
 
 export default OtherUsers

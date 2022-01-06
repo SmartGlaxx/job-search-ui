@@ -12,10 +12,10 @@ import {Redirect} from 'react-router-dom'
 import Axios from 'axios'
 import OtherUsers from '../../Components/OtherUsers/otherUsers'
 import LoadingIcons from 'react-loading-icons'
-import ProfileImage from '../../assets/profile.jfif'
+import ProfileImage from '../../assets/profile.jpg'
 import CoverImage from '../../assets/cover.jfif'
 import Button from '@restart/ui/esm/Button'
-import Profile from "../../assets/profile.jfif"
+// import Profile from "../../assets/profile.jfif"
 import { LeftNavigation } from '../../Components'
 
 const Connections =()=>{
@@ -271,7 +271,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                         if(allUser._id !== _id && currentUserParsed && !currentUserParsed.connections.includes(allUser._id) && !currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={firstname} className="connections-img"/>
+                                <img src={ProfileImage} alt={firstname} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -303,7 +303,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                         if(allUser._id !== _id && currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="connections-img"/>
+                                <img src={ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -332,7 +332,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                         if(allUser._id !== _id && currentUserParsed.sentConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="connections-img"/>
+                                <img src={ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -356,7 +356,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                         if(allUser._id !== _id && currentUserParsed.connections.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="connections-img"/>
+                                <img src={ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>

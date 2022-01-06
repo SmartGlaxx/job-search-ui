@@ -2,20 +2,27 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import './posts.css'
 import { Comments } from '../';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 import { Button, Grid } from '@material-ui/core'
 import ProfileImage from '../../assets/profile.jpg'
 import TimeAgo from 'timeago-react'
 import { useEffect, useState } from 'react'
 import {FaExclamationCircle, FaThumbsUp, FaComment, FaEllipsisH, FaShare, FaWindowClose, 
-    FaPen, FaTrash, FaTelegramPlane} from 'react-icons/fa'
-import axios from 'axios'
-import { UseAppContext } from '../../Contexts/app-context'
-import { Backdrop } from '../'
-
-
+    FaPen, FaTrash, FaTelegramPlane, FaEdit} from 'react-icons/fa'
+    import axios from 'axios'
+    import { UseAppContext } from '../../Contexts/app-context'
+    import { Backdrop } from '../'
+    
+    const useStyles = makeStyles((theme) => ({
+        typography: {
+            padding: theme.spacing(2),
+        },
+    }));
+    
 const Posts =({_id : id, userId, username, description, likes, createdAt, sharedDescription, shareImg, sharedId, 
     sharedUsername, img : postImage})=>{
-    const {timelineposts, currentUser, setPostCreated, postCreated,commentSent, 
+    const {timelineposts, currentUser, currentUserParsed, setPostCreated, postCreated,commentSent, 
         setCommentSent, fetchedUser} = UseAppContext()
     const [readMoreValue, setReadMoreValue] = useState(false)
     const [error, setError] = useState({status : false, msg:''})
@@ -32,16 +39,58 @@ const Posts =({_id : id, userId, username, description, likes, createdAt, shared
     const [updateValue, setUpdateValue] = useState(description)
     // const [commentSent, setCommentSent] = useState(false)
     const [updateSent, setUpdateSent] = useState(false)
-    const [showOptions, setShowOptions] = useState(false)
+    // const [showOptions, setShowOptions] = useState(false)
     const [showCommentOptions, setShowCommentOptions] = useState(false)
     const [showUpdatePostForm, setShowUpdatePostForm] = useState(false)
     const [showDeletePostDialog, setShowDeletePostDialog] = useState(false)
     const [shareForm, setShareForm] = useState(false)
     const [sharePostValue, setSharePostValue] = useState('')
     const [fetchedUserData, setFetchedUserData] = useState({})
-    const {_id : currentUserLikeId} = JSON.parse(currentUser)
+    const {_id : currentUserLikeId} = currentUserParsed
 
-    const {profilePicture} = fetchedUserData
+    const {firstname, lastname, profilePicture} = fetchedUserData
+
+
+    const classes = useStyles();
+    
+//Popover functions
+const [anchorEl1, setAnchorEl1] = React.useState(null);
+const [anchorEl2, setAnchorEl2] = React.useState(null);
+const [anchorEl3, setAnchorEl3] = React.useState(null);
+
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClick3 = (event) => {
+    setAnchorEl3(event.currentTarget);
+  };
+
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+  const handleClose3 = () => {
+    setAnchorEl3(null);
+  };
+
+  const open1 = Boolean(anchorEl1);
+  const id1 = open1 ? 'simple-popover1' : undefined;
+
+  const open2 = Boolean(anchorEl2);
+  const id2 = open2 ? 'simple-popover2' : undefined;
+
+  const open3 = Boolean(anchorEl3);
+  const id3 = open3 ? 'simple-popover3' : undefined;
+
+
+
+
+
     const setFormForComment =()=>{
         setCommentForm(!commentForm)
         setShowUpdatePostForm(false)
@@ -77,7 +126,7 @@ const Posts =({_id : id, userId, username, description, likes, createdAt, shared
         })
             
         }
-    console.log(fetchedUserData.profilePicture,'sadsfd fetchedUserData')
+    
     //FETCH ALL USERS USEEFFECT
     useEffect(()=>{
         fetchAUser(`${usersUrl}/${userId}/${username}`)         
@@ -92,7 +141,7 @@ const Posts =({_id : id, userId, username, description, likes, createdAt, shared
     //set values for liked post
     const setLikedValue=(value1, value2)=>{
         setLiked(value1)
-        const {_id : currentUserId, username : currentUserName} = JSON.parse(currentUser)
+        const {_id : currentUserId, username : currentUserName} =currentUserParsed
         
         const setLikedId=async(value)=>{
             
@@ -168,7 +217,7 @@ const Posts =({_id : id, userId, username, description, likes, createdAt, shared
 
     // //post a comment
     const postComments = async(url)=>{
-        const {_id : currentUserId, username : currentUserName} = JSON.parse(currentUser)
+        const {_id : currentUserId, username : currentUserName} = currentUserParsed
         const options ={
             url : `https://smart-job-search.herokuapp.com/api/v1/comments/${id}/${currentUserId}/${currentUserName}`,
             method : "POST",
@@ -195,7 +244,7 @@ const Posts =({_id : id, userId, username, description, likes, createdAt, shared
 
 //Update post
 const postUpdate = async()=>{
-    const {_id : currentUserId, username : currentUserName} = JSON.parse(currentUser)
+    const {_id : currentUserId, username : currentUserName} = currentUserParsed
         const options ={
             url : `https://smart-job-search.herokuapp.com/api/v1/posts/${id}`,
             method : "PATCH",
@@ -225,7 +274,7 @@ const postUpdate = async()=>{
 
 //Delete Post
 const deletePost = async(id)=>{
-    const {_id : currentUserId, username : currentUserName} = JSON.parse(currentUser)
+    const {_id : currentUserId, username : currentUserName} = currentUserParsed
     const options ={
         url : `https://smart-job-search.herokuapp.com/api/v1/posts/${id}`,
         method : "DELETE",
@@ -256,7 +305,7 @@ const deletePost = async(id)=>{
 const sharePost = async(url)=>{
     //sharedId = ID of origina poster
     //sharedUsername = Username of origina poster
-    const {_id : currentUserId, username : currentUserName} = JSON.parse(currentUser)
+    const {_id : currentUserId, username : currentUserName} = currentUserParsed
     const options ={
         url : `https://smart-job-search.herokuapp.com/api/v1/posts/${id}/${userId}/${username}`,
         method : "POST",
@@ -285,18 +334,18 @@ const sharePost = async(url)=>{
     }
 }
 
-const {_id : uId , username : userUsername} =  JSON.parse(currentUser)
+const {_id : uId , username : userUsername} =  currentUserParsed
     return <div className='posts' container > 
                 {
                     error.status && <div className='errorNotice'><FaExclamationCircle />{error.msg}</div>
                 }  
-                {
+                {/* {
                     showOptions && <div className='options-box'>
                     <FaWindowClose onClick={()=>setShowOptions(!showOptions)} className='close-btn'/><br />
                     <Button onClick={setFormForUpdate}>Update Post</Button><br />
                     <Button onClick={()=>setShowDeletePostDialog(!showDeletePostDialog)}>Delete Post</Button>
                     </div>
-                }
+                } */}
                 {
                     showDeletePostDialog && <div className='backdrop' onClick={()=>setShowDeletePostDialog(false)}>
                     <div className='delete-box' >
@@ -308,14 +357,56 @@ const {_id : uId , username : userUsername} =  JSON.parse(currentUser)
                     </div>
                 }
                 <div  className='postContainer' >
-                { uId == userId && userUsername == username && <Button className='more-options'  onClick={()=>setShowOptions(!showOptions)}>
+                { uId == userId && userUsername == username && <Button className='more-options' aria-describedby={id} variant="contained" color="primary" onClick={handleClick1}>
                      <FaEllipsisH  />
                  </Button>
                    }
+                   <Popover
+                        id={id1}
+                        open={open1}
+                        anchorEl={anchorEl1}
+                        onClose={handleClose1}
+                        anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                        }}
+                    >
+                        <Typography className={classes.typography}>
+                            <Button onClick={setFormForUpdate}><FaEdit /></Button>
+                            <Button onClick={handleClick2}><FaTrash /></Button>
+                        </Typography>
+                    </Popover>
+                    <Popover
+                        id={id2}
+                        open={open2}
+                        anchorEl={anchorEl2}
+                        onClose={handleClose2}
+                        anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'right',
+                        }}
+                    >
+                        <Typography className={classes.typography}>
+                        <div className='delete-box' >
+                            <form>
+                                <Button onClick={()=>setShowDeletePostDialog(false)}>Cancel</Button>
+                                <Button onClick={()=>deletePost(id)}>Delete Post</Button>
+                            </form>
+                        </div>
+                        </Typography>
+                    </Popover>
                     
                 <div className='post-top'>
-                    <img src={profilePicture ? profilePicture : ProfileImage} alt={username}  className='profile-pic'/>
-                    <div className='name'>{username}</div>
+                    <img src={profilePicture ? profilePicture : ProfileImage}  className='profile-pic'/>
+                    <div className='name'>{`${firstname} ${lastname}`}</div>
                     <TimeAgo datetime={createdAt} locale='en_US'/>
                 </div>
                 <div className='description'>{description.length > 150  && !readMoreValue ? description.slice(0, 150) + "...  "  : description }
@@ -363,6 +454,30 @@ const {_id : uId , username : userUsername} =  JSON.parse(currentUser)
                         <Button style={{float:"right", marginTop:"-1.85rem"}} onClick={postComments}><FaTelegramPlane className='submit-icon'/></Button>
                     </form>
                     }
+                    <Popover
+                        id={id3}
+                        open={open3}
+                        anchorEl={anchorEl3}
+                        onClose={handleClose3}
+                        anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'right',
+                        }}
+                    >
+                        <Typography className={classes.typography}>
+                        <div className='delete-box' >
+                        <input type ='text' placeholder='Write a comment...' className='comment-input'
+                        value = {commentValue} onChange={(e)=>setCommentValue(e.target.value)}/>
+                        <Button style={{float:"right", marginTop:"-1.85rem"}} onClick={postComments}>
+                            <FaTelegramPlane className='submit-icon'/>
+                        </Button>
+                        </div>
+                        </Typography>
+                    </Popover>
                     {
                         showUpdatePostForm &&  <form>
                         <input type ='text' className='comment-input'

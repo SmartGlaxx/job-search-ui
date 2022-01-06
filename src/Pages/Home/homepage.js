@@ -338,15 +338,16 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
             </div>    
             <div className='homepage-center-middle'>
               {!timeline ? 
-                <div style={{width: "100%",height : "100vh", 
-                display: 'grid', placeItems: "center"}}>
-                    <LoadingIcons.Puff       stroke="#555" strokeOpacity={.9} />
-                </div> :
-                timeline.length == 0 ? <>
-                <h3>No posts yet. Follow other users and create posts</h3> 
+                <div className='timeline-posts'>
+                    {/* <LoadingIcons.Puff  stroke="#555" strokeOpacity={.9} /> */}
+                    <>
+                <h5 className='other-users-header'>No posts yet. Follow other users and create posts</h5> 
                     <OtherUsers />
-                <h4>People you may know</h4> 
+                <h5 className='people-you-know' >People you may know</h5> 
                 </>
+                </div> 
+                // : 
+                // timeline.length == 0 ?
                 :
                 <>
                 <OtherUsers />

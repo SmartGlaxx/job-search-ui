@@ -147,11 +147,24 @@
 .post-img-preview-2{
     margin-top: 40rem;
     width: 100%;
-    /* height: 20rem; */
-    /* margin : 0 auto; */
     object-fit: cover;
 }
+.timeline-posts{
+    width: 100%;
+    height : 100vh;
+}
+.other-users-header{
+    text-align: center;
+    font-size: 1rem;
+    color : var(--color2)
+}
 
+.people-you-know{
+    text-align: left;
+    font-size: 1rem;
+    color : var(--color2);
+    margin-left: 0.5rem;
+}
 
 @media screen and (max-width : 600px){
     .homepage-left, .homepage-right{
