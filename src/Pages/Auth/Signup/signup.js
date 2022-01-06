@@ -11,6 +11,8 @@ const Signup =()=>{
     const {setLoading, loading, setCurrentUser, currentUser} = UseAppContext()
     const [error, setError] = useState({status: false, msg :''})
     const [formValues, setFormValues] = useState({
+        firstname : "",
+        lastname : "",
         username : '',
         email : '',
         password1 : "",
@@ -19,8 +21,11 @@ const Signup =()=>{
     const navigate = useNavigate()
 
     const setValues =(e)=>{
-        const name = e.target.name
-        const value = e.target.value
+        let name = e.target.name
+        let value = e.target.value
+        if(name=='username'){
+            value = value.replace(/\s+/g, '')
+        }
         setFormValues(prev => {
             return{...prev, [name] : value}
         })
@@ -28,7 +33,7 @@ const Signup =()=>{
     const submit = async(e)=>{
         //setLoading(true)
         e.preventDefault()
-        const {username, email, password1, password2} = formValues
+        const { firstname, lastname, username, email, password1, password2} = formValues
         if(password2 !== password1){
             setError({status : true, msg : "Password Mismatch"})
             setTimeout(()=>{
@@ -43,6 +48,8 @@ const Signup =()=>{
                     "Content-Type" : "application/json;cjarset=UTF-8"
                 },
                 data:{
+                    firstname : firstname, 
+                    lastname : lastname,
                     username : username,
                     email : email,
                     password : password1
@@ -86,6 +93,8 @@ const Signup =()=>{
             <div>
             <form>
                  <h3 className='page-title'>Register</h3>
+                 <input className='input' value ={formValues.firstname} onChange={setValues} type='text' name='firstname' placeholder='Firstname'/>
+                 <input className='input' value ={formValues.lastname} onChange={setValues} type='text' name='lastname' placeholder='Lastname'/>
                 <input className='input' value ={formValues.username} onChange={setValues} type='text' name='username' placeholder='Username'/>
                 <input className='input' value ={formValues.email} onChange={setValues} type='email' name='email' placeholder='E-Mail'/>
                 <input className='input' value ={formValues.password1} onChange={setValues} type='password' name='password1' placeholder='Password'/>

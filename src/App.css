@@ -7,6 +7,7 @@
     --background-color-2 : #ffffff;
     --background-color-3 : #e7e7dd;
     --background-color-4 : linear-gradient(to top, rgb(28, 30, 32), rgba(197, 197, 206, 0.3));
+    --border-color  : rgb(30,40,50);
     --box-border-radius: 0.5rem;
     --btn-border-radius: 0.2rem;
     --button-background : #a3a0a0;
@@ -15,6 +16,7 @@
     --btn-padding : 0.2rem 1rem;
     --btn-padding-2 : 0.6rem 1.2rem;
     --btn-padding-3 : 0.2rem 0.5rem;
+    --btn-padding-4 : 0.1rem 0.3rem;
     --btn-font-size : 1rem;
     --btn-font-size-2 : 0.8rem;
     --btn-font-size-3 : 0.4rem;
@@ -23,11 +25,19 @@
     --color2 : #446;
     --color3 : rgb(246, 246, 255);
     --color4 : #335;
+    --color5 : #fff;
+    --color6 : #a09e22;
+    --color-alert : rgb(223, 5, 5);
     --color-close : rgb(236, 39, 39);
     --color-success : rgb(3, 145, 15);
+    --chat-padding : 0.5rem;
+    --chat-padding-2 : 0.8rem;
+    --chat-padding-3 : 0.5rem;
+    --chat-color-1 : #bae8e8;
+    --chat-color-2 : #e3f6f5; 
     --error-background : rgba(230, 230, 230, 0.9);
     --error-border: 1px solid #888;
-    --error-color : rgb(236, 39, 39);;
+    --error-color : rgb(236, 39, 39);
     --error-font-size : 1rem;
     --error-width : 15rem;
     --error-padding : 0.6rem;
@@ -38,7 +48,8 @@
     --header-font-size-4 : 0.9rem;
     --header-font-size-5 : 0.8rem;
     --header-section-padding: 0 1rem;
-    --icon-li-padding : 1rem;
+    --icon-li-padding : 0.3rem 1rem;
+    --icon-li-padding2 : 0.6rem;
     --icon-size1 : 1.8rem;
     --icon-size2 : 1.2rem;
     --icon-margin : 0 0.5rem;
@@ -57,6 +68,7 @@
     --section-margin : 1rem;
     --section-padding : 1rem;
     --section-padding-2 : 0.4rem;
+    --section-border-radius : 0.3rem;
     --small-font1 : 0.8rem;
     --warning-text : #cf2900;
     --warning-text-2 :rgb(255, 55, 5);

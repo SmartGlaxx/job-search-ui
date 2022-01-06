@@ -8,7 +8,9 @@ ALERT='ALERT'; const ALLUSERS = "ALLUSERS"; const TEMPALLUSERS = 'TEMPALLUSERS';
 const SETCUSERFOLLOWINGS = "SETCUSERFOLLOWINGS"; const SETNEWTEMPUSER = 'SETNEWTEMPUSER'
 const POSTCREATED = 'POSTCREATED'; const SETSIDEBAR = 'SETSIDEBAR' ; const USERCLICKED = 'USERCLICKED';
 const SETFETCHEDUSER = 'SETFETCHEDUSER'; const COMMENTSENT = 'COMMENTSENT';
-const CURRENTUSERPARSED = 'CURRENTUSERPARSED' ; const TESTVALUE = 'TESTVALUE'
+const CURRENTUSERPARSED = 'CURRENTUSERPARSED' ; const TESTVALUE = 'TESTVALUE'; const LAZYLOADING = 'LAZYLOADING';
+const SETCHATUSERNAME = 'SETCHATUSERNAME'; const SETREPLYSENT = 'SETREPLYSENT';
+const SCROLLINTOVIEW = "SCROLLINTOVIEW" ; const SETSEARCHTERM = "SETSEARCHTERM"
 
 
 const getLoggedIn = ()=>{
@@ -53,6 +55,7 @@ const initialState = {
     //page-context
     alert : {status : false, msg : ''},
     loading : false,
+    lazyLoading : false,
     sidebarOpen : false,
     timelineposts : [],
     allUsers : [],
@@ -63,9 +66,11 @@ const initialState = {
     fetchedUser : {},
 
     commentSent : false,
+    replySent : false,
+    testValue : false,
 
-    testValue : false
-
+    scrollIntoViewValue : false,
+    searchTermValue : ''
 }
 
 export const AppProvider = ({children})=>{
@@ -73,7 +78,10 @@ export const AppProvider = ({children})=>{
     const allUsersUrl = "https://smart-job-search.herokuapp.com/api/v1/user"
     const posturl = 'https://smart-job-search.herokuapp.com/api/v1/posts'
 
+    useEffect(()=>{
+        console.log('smart search state', state.searchTerm)
 
+    },[state.searchTerm])
     //SET LOADING 
     const setLoading =(value)=> {
     //    console.log('LOADING')
@@ -82,7 +90,7 @@ export const AppProvider = ({children})=>{
 
     //FETCH TIME-LINE POSTS
     const fetchTimelinePosts = async(url)=>{
-        
+      
         const options = {
             url: url,
             method : "GET",
@@ -92,26 +100,25 @@ export const AppProvider = ({children})=>{
             }
         }
        // dispatch({type : LOADING, payload : true})
-    
+       
         const result = await Axios(options)
-        const {response, data} = result.data
-        if(response == 'Success'){
-            
-           const newTimelinePosts = data.sort((a,b)=>{
+        const {response, allPosts} = result.data
+        if(response == 'Success' && allPosts){
+           const newTimelinePosts = allPosts.sort((a,b)=>{
                return new Date(b.createdAt) - new Date(a.createdAt)
            })
             dispatch({type : TIMELINEPOSTS, payload : newTimelinePosts})
         }else if(response == 'Fail'){
-           // dispatch({type : LOADING, payload : false})
             dispatch({type: ALERT, payload : "An error occured"})
         }
         
     }
-
+    // console.log('joler ', state.timelineposts )
     // const checkeUser = state.currentUser
     
     // console.log(con._id)
    
+    
     //FETCH TIME-LINE POSTS USEEFFECT
     useEffect(()=>{
        
@@ -170,11 +177,11 @@ export const AppProvider = ({children})=>{
 
     //FETCH ALL USERS USEEFFECT
     useEffect(()=>{
-        if(state.timelineposts.length == 0){
+        // if(state.timelineposts.length == 0){
                 fetchAllUsers(allUsersUrl) 
-        }
+        // }
        
-    },[])
+    },[state.testValue, state.postcreated])
 
     //FETCH ALL USERS WHEN MORE BUTTON IS CLICKED
     const setTempAllusers = (value)=>{
@@ -210,7 +217,7 @@ export const AppProvider = ({children})=>{
    }
 
    const fetchCurrentUser=async(userUrl)=>{
-       console.log(userUrl, 'fetch url')
+
     const options = {
         url: userUrl,
         method : "GET",
@@ -222,7 +229,7 @@ export const AppProvider = ({children})=>{
    
     const result = await Axios(options)
     const {response, data} = result.data
-        if(data){
+        if(response == "Success" && data){
             dispatch({type : CURRENTUSERPARSED , payload : data})
             //return window.location.href = '/'
         }else{
@@ -260,6 +267,7 @@ const setFetchedUser = (value)=>{
     dispatch({type : SETFETCHEDUSER, payload : value})
 }
 
+
 //TRIGGER COMMENT SENT
 const setCommentSent = (value)=>{
     dispatch({type : COMMENTSENT, payload : value})
@@ -276,10 +284,35 @@ const setTestValue = (value)=>{
     dispatch({type : TESTVALUE, payload : value})
 }
 
+//SET LAZY-LOADING FOR POSTS
+const setLazyLoading = (value)=>{
+    dispatch({type : LAZYLOADING, payload : value})
+}
+
+//SET USERNAME FOR CHAT MATE
+const setChatUser = (value)=>{
+    dispatch({type : SETCHATUSERNAME, payload : value})
+}
+
+const setReplySent = (value)=>{
+    dispatch({type : SETREPLYSENT, payload : value})
+}
+
+//scroll-into-view function
+const setScrollIntoViewValue = (value)=>{
+    dispatch({type : SCROLLINTOVIEW, payload : value })
+}
+
+//set the search term
+const setSearchTermValue = (value)=>{    
+    dispatch({type : SETSEARCHTERM , payload : value})
+}
+
     return <AppContext.Provider value={{
-        ...state, setLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, setTempAllusers,
-        setPostCreated, openSidebar, setUserClicked, setFetchedUser, setTimelinePosts,
-        setCommentSent,    setTestValue
+        ...state, setLoading, setLazyLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, 
+        setTempAllusers, setPostCreated, openSidebar, setUserClicked, setFetchedUser, 
+        setTimelinePosts, setCommentSent,  setTestValue, setChatUser, setReplySent, setScrollIntoViewValue,
+        setSearchTermValue
     }}>
     {children}
     </AppContext.Provider>

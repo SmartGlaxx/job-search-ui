@@ -1,0 +1,21 @@
+.page-left-inner{
+    height: 100%;
+    overflow: auto;
+    padding: var(--section-padding)
+}
+.homepage-left-top{
+    font-size: var(--header-font-size);
+}
+.homepage-left-ul{
+    list-style-type: none;
+    color:var(--color2)
+}
+.homepage-left-li{
+    text-decoration: none;
+    color:var(--color2)
+}
+.left-nav{
+    font-size: 1rem;
+    color:var(--color2);
+    text-decoration: none;
+}

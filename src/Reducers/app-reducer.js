@@ -4,7 +4,9 @@ ALERT='ALERT'; const ALLUSERS = "ALLUSERS"; const TEMPALLUSERS = 'TEMPALLUSERS';
 const SETCUSERFOLLOWINGS = "SETCUSERFOLLOWINGS"; const SETNEWTEMPUSER = 'SETNEWTEMPUSER'
 const POSTCREATED = 'POSTCREATED'; const SETSIDEBAR = 'SETSIDEBAR' ; const USERCLICKED = 'USERCLICKED';
 const SETFETCHEDUSER = 'SETFETCHEDUSER'; const COMMENTSENT = 'COMMENTSENT';
-const CURRENTUSERPARSED = 'CURRENTUSERPARSED'; const TESTVALUE = 'TESTVALUE'
+const CURRENTUSERPARSED = 'CURRENTUSERPARSED'; const TESTVALUE = 'TESTVALUE'; const LAZYLOADING = 'LAZYLOADING';
+const SETCHATUSERNAME = 'SETCHATUSERNAME'; const SETREPLYSENT = 'SETREPLYSENT';
+const SCROLLINTOVIEW = "SCROLLINTOVIEW" ; const SETSEARCHTERM = "SETSEARCHTERM"
 
 const reducer = (state, action)=>{
     switch(action.type){
@@ -40,7 +42,19 @@ const reducer = (state, action)=>{
             
         case TESTVALUE :
             return {...state, testValue : action.payload}
-        
+        case LAZYLOADING :
+            return {...state, lazyLoading : action.payload}
+        case SETCHATUSERNAME :
+            return {...state, chatUser : action.payload}
+            
+        case SETREPLYSENT : 
+            return {...state, replySent : action.payload}
+        case SCROLLINTOVIEW :
+            return {...state, scrollIntoViewValue : action.payload}
+        case SETSEARCHTERM : 
+            return {...state, searchTermValue : action.payload}
+
+
         default:
             return {...state}
     }

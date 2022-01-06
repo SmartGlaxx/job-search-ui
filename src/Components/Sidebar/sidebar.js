@@ -27,7 +27,6 @@ const Sidebar =()=>{
      const classes = useStyles();
      const [anchorEl, setAnchorEl] = React.useState(null);
    
-   
      
     return <div className={ sidebarOpen ? `sidebarContainer2` : `sidebarContainer1`}  >
         <div className="sidebarTop " item xs ={9} sm={3}>
@@ -45,12 +44,12 @@ const Sidebar =()=>{
                     Home
                     </li>
                     <li className="sideTop-li">
-                    <FaUserFriends className="icons"  size='15'/>
-                    Followings
+                    <FaPeopleArrows className="icons"  size='15'/>
+                    Connections
                     </li>
                     <li className="sideTop-li">
-                    <FaPeopleArrows className="icons"  size='15'/>
-                    Friends
+                    <FaUserFriends className="icons"  size='15'/>
+                    Follows
                     </li>
                     <li className="sideTop-li">
                     <FaBriefcase className="icons"  size='15'/>
