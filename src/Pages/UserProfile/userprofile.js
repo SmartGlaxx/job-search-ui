@@ -25,7 +25,7 @@ const {loggedIn, setLoading, loading, setLazyLoading, lazyLoading, currentUser, 
     fetchedUser, setTestValue, testValue} = UseAppContext()
 const [formValue, setFormValue] = useState('')
 const [error, setError] = useState({status : false, msg:''})
-const {_id : userId, username : userUsername, followings, followers, 
+const {_id : userId, username : userUsername, firstname, lastname, followings, followers, 
     profilePicture : userProfilePicture, coverPicture : userCoverPicture} = fetchedUser
 // const {profilePicture : userProfilePicture, coverPicture : userCoverPicture} = currentUserParsed
 const [alertMsg, setAlertMsg] = useState({status : false, msg : ''})
@@ -317,6 +317,11 @@ const setDataValues = (value, data)=>{
 let newUserFollowings  = []
 if(currentUserParsed){
      newUserFollowings = currentUserParsed.followings
+}
+
+let newUserFollowers  = []
+if(currentUserParsed){
+    newUserFollowers = currentUserParsed.followers
 }
 
 //FOLLOW USER
@@ -633,6 +638,7 @@ if(loading || allUsers.length == 0 || !username && !timelineposts || !fetchedUse
 
 
 
+
 const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
 
 const firstLetter = username[0]
@@ -696,14 +702,14 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
                         {/* <button className='post-btn' onClick={submit}>Post</button> */}
                     </form>
                     <div className='profile-summary-desktop'>
-                        <h1 className='username'>{usernameCapitalized}</h1>
+                        <h1 className='username'>{`${firstname} ${lastname}`}</h1>
                         <div className='-followings'>{`Following : ${followings.length}`}</div>
                         <div className='-followings'>{`Followers : ${followers.length}`}</div>
                     </div>
                 </Grid>
                 <Grid className='profile-summary' item xs={12} sm={5}> 
                     <div className='profile-summary-inner'>
-                        <h1 className='username'>{usernameCapitalized}</h1>
+                        <h1 className='username'>{`${firstname} ${lastname}`}</h1>
                         <div className='-followings'>{`Following : ${followings.length}`}</div>
                         <div className='-followings'>{`Followers : ${followers.length}`}</div>
                     </div>
@@ -717,17 +723,17 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
                         <FaEllipsisH />
                     </div>
                     <div className='other-userbtn2'>
-                        {  currentUserParsed && !currentUserParsed.followings.includes(userId) ?
+                        {  currentUserParsed.followings && !currentUserParsed.followings.includes(userId) ?
                             <Button className='btn' onClick={(e)=>follow(e, userId, userUsername)}>Follow</Button>
                         : <Button className='btn' onClick={(e)=>unfollow(e, userId, userUsername)}>Unfollow</Button>
                         }
-                        { currentUserParsed && !currentUserParsed.connections.includes(userId) &&
+                        { currentUserParsed.connections && !currentUserParsed.connections.includes(userId) &&
                             !currentUserParsed.sentConnectionRequests.includes(userId) &&
                             !currentUserParsed.receivedConnectionRequests.includes(userId) && 
                             <Button onClick={(e)=>connectRequest(e, id, username)} className='btn'>Connect Request
                             </Button>
                         }
-                        {currentUserParsed && !currentUserParsed.connections.includes(userId) &&
+                        {currentUserParsed.connections && !currentUserParsed.connections.includes(userId) &&
                             (currentUserParsed.receivedConnectionRequests.includes(userId) || 
                             currentUserParsed.sentConnectionRequests.includes(userId)) &&
                             <Button onClick={(e)=>connectRequest(e, id, username)} className='btn'>Cancel Request</Button>
@@ -778,14 +784,14 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
             </div>:
                fetchedUser ?
             allUsers.map(allUser => {
-                const {_id : id, username} = allUser
+                const {_id : id, username, firstname, lastname} = allUser
                 const {_id, followings} = fetchedUser
                       if(allUser._id !== _id && followings.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follow-img"/>
+                                <img src={Profile} alt={username} className="follow-img" style={{width:"6rem"}}/>
                             </Link>
-                            <div className='follow-name'>{username}</div>
+                            <div className='follow-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
                                 <button onClick={(e)=>unfollow(e, id, username)} className='follow-btn'>
@@ -799,7 +805,7 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
            }
            </div>
            <h3>Followers</h3>
-              <div className='connections-box'>
+              <div className='connections-box' style={{padding:"0.1rem 0"}}>
               {
             allUsers.length == 0 ? 
             <div style={{width: "100%",height : "7rem", 
@@ -808,18 +814,21 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
             </div>:
                fetchedUser ?
             allUsers.map(allUser => {
-                const {_id : id, username} = allUser
+                const {_id : id, username, firstname, lastname} = allUser
                 const {_id, followers} = fetchedUser
                       if(allUser._id !== _id && followers.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follow-img"/>
+                                <img src={Profile} alt={username} className="follow-img" style={{width:"6rem"}}/>
                             </Link>
-                            <div className='follow-name'>{username}</div>
+                            <div className='follow-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
                                 {  allUser._id != currentUserParsed._id  && newUserFollowings &&
-                                    <button onClick={(e)=>unfollow(e, id, username)} className='follow-btn'>{ newUserFollowings.includes(allUser._id) ? `Unfollow` : `Follow`}</button>}
+                                    <button onClick={newUserFollowings.includes(allUser._id) ? 
+                                        (e)=>unfollow(e, id, username) : (e)=>follow(e, id, username)}
+                                        className='follow-btn'>
+                                        { newUserFollowings.includes(allUser._id) ? `Unfollow` : `Follow`}</button>}
                             </form>
                         </div>
                      }

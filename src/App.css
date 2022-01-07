@@ -27,6 +27,7 @@
     --color4 : #335;
     --color5 : #fff;
     --color6 : #a09e22;
+    --color-7 : #243eb3;
     --color-alert : rgb(223, 5, 5);
     --color-close : rgb(236, 39, 39);
     --color-success : rgb(3, 145, 15);
@@ -35,6 +36,7 @@
     --chat-padding-3 : 0.5rem;
     --chat-color-1 : #bae8e8;
     --chat-color-2 : #e3f6f5; 
+    --connections-fontsize : 0.7rem;
     --error-background : rgba(230, 230, 230, 0.9);
     --error-border: 1px solid #888;
     --error-color : rgb(236, 39, 39);

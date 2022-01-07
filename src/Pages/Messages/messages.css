@@ -138,6 +138,16 @@
     margin : 0.6rem
 }
 
+.no-connection{
+    color: var(--error-color);
+    font-weight: 600;
+    text-align: center;
+}
+
+.connect-link{
+    text-decoration: none;
+}
+
 /* Chat */
 
 

@@ -12,10 +12,10 @@ import {Redirect} from 'react-router-dom'
 import Axios from 'axios'
 import OtherUsers from '../../Components/OtherUsers/otherUsers'
 import LoadingIcons from 'react-loading-icons'
-import ProfileImage from '../../assets/profile.jfif'
+import ProfileImage from '../../assets/profile.jpg'
 import CoverImage from '../../assets/cover.jfif'
 import Button from '@restart/ui/esm/Button'
-import Profile from "../../assets/profile.jfif"
+// import Profile from "../../assets/profile.jpg"
 import { LeftNavigation } from '../../Components'
 
 const Follows =()=>{
@@ -355,12 +355,12 @@ const unfollow =async(e, id, followedUsername)=>{
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followers} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed && userFollowers.includes(allUser._id)) {
                         return <div key={id} className='follows-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follows-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} className="follows-img"/>
                             </Link>
                             <div className='follows-name'>{username}</div>
                         </div>
@@ -375,16 +375,16 @@ const unfollow =async(e, id, followedUsername)=>{
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followings} = currentUserParsed.followings ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed && userFollowings.includes(allUser._id)){
-                        return <div key={id} className='follows-box'>
+                        return <div key={id} className='follow-page-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follows-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="follows-img"/>
                             </Link>
                             <div className='follows-name'>{username}</div>
                             <form>
-                                <button onClick={(e)=>unfollow(e, id, username)} className='follow-btn2'>
+                                <button onClick={(e)=>unfollow(e, id, username)} className='follow-page-btn'>
                                     {newUserFollowings  && newUserFollowings.includes(allUser._id) ? `Unfollow` : `Follow`}</button>
                             </form>
                         </div>

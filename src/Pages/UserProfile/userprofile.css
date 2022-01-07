@@ -379,7 +379,7 @@
 }
 
 .otherUsers-inner{
-    min-width: 6rem;
+    width: 6rem;
     height: 10rem;
     margin : 0.3rem;
     background: var(--background-color-3);
@@ -391,7 +391,7 @@
 }
 
 .follow-btn{
-    width: 100%;
+    /* width: 100%;
     cursor: pointer;
     padding: var(--btn-padding);
     background: var( --button-background);
@@ -399,7 +399,7 @@
     position: absolute;
     right: 0rem;
     bottom:0;
-     border: 1px solid var(--background-color-2);
+    border: 1px solid var(--background-color-2); */
 }
 
 .connections-box{
@@ -417,11 +417,22 @@
     object-fit: cover;
 }
 .follow-name{
-    position: absolute;
+    /* position: absolute;
     color : var(--color5);
     bottom: 1.5rem;
     width: 100%;
     font-size: var(--button-font-size-20);
+    background : var(--background-color-4);
+    z-index: 2; */
+    position: absolute;
+    color:var(--color3);
+    bottom: 1.2rem;
+    width: 100%;
+    height: 3rem;
+    opacity: 0.8;
+    display: flex;
+    align-items: flex-end;
+    overflow-x: hidden;
     background : var(--background-color-4);
     z-index: 2;
 }

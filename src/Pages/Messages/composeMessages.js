@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { FaImages } from 'react-icons/fa'
 import { LeftNavigation } from '../../Components'
+import { Link } from 'react-router-dom';
 
 const ComposeMessages = () =>{
 const {loggedIn, currentUserParsed, allUsers, setPostCreated, setTestValue} = UseAppContext()
@@ -163,7 +164,7 @@ const sendMessage = async(e)=>{
 }
 
 const uploadMessagePicture = async(value)=>{
-    const {_id : userId , username} = currentUserParsed
+    const {_id : userId , username, firstname, lastname} = currentUserParsed
     // const  url =`${msgImgurl}/uploadmessageimage/${userId}/${username}`
 
     const fd = new FormData()
@@ -209,6 +210,7 @@ const setMessageImgePicture = (value)=>{
 if(loggedIn == false){
     return window.location.href = '/login'
 }
+const {_id : userId , firstname, lastname} = currentUserParsed
     return <div>
         <Topbar />
         <Sidebar />
@@ -234,33 +236,32 @@ if(loggedIn == false){
             <Grid item xs={12} sm={8} className="compose-center">
             <div className='compose-center-inner'>
             <h3>Compose Message</h3>
+            
             <form className="compose-center-form">
-                From: <input type='text'  value={username} name='from' className='forminput'/><br />
-                To: <select type='text' onChange={setFormValue} name='recipient' className='forminput'><br />
+                <input type='hidden'  value={username} name='from' className='forminput' /><br />
+                {connections && connections.length > 0 && <> <span>From:</span> {`${firstname} ${lastname}`}<br /></> }
+                {connections && connections.length > 0 && <><span>To:</span> <select type='text' onChange={setFormValue} name='recipient' className='forminput'>
                 <option selected>Select Recipient</option>
                 {
                 allUsers.length > 1 && allUsers.map(allUser =>{
                     if(connections && connections.includes(allUser._id)){
-                        const {_id, username} = allUser
-                        
-                        return <option value={`${_id} ${username}`} key = {_id}>{username}</option>
-                            
-                        
+                        const {_id, username, firstname, lastname} = allUser           
+                        return <option value={`${_id} ${username}`} key = {_id}>{`${firstname} ${lastname}`}</option>
                     }
                     
                 }) 
-
                 }
-
+                </select></>}
+                <br />
+                {connections && connections.length < 1 && <div className='no-connection'>No connections yet. 
+                <Link to={`/connections/${userId}/${username}`} className='connect-link'>Connect</Link> with users to send messages.</div>}
+                {connections && connections.length > 0 && <> <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
+                cols='20' rows='5' name='message' className='forminput' value={formData.message}></textarea><br /></>}
                 
-                </select><br />
-                <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
-                cols='20' rows='5' name='message' className='forminput' value={formData.message}></textarea><br />
-                
-                <Button  className='formbutton' onClick={sendMessage}>Send</Button>
+                {connections && connections.length > 0 && <Button  className='formbutton' onClick={sendMessage}>Send</Button>}
             </form>
             </div>
-            <div className='compose-center-top-inner2'>
+            {connections && connections.length > 0 && <> <div className='compose-center-top-inner2'>
                  <label htmlFor='postPicture' >
                         <div className="homepage-center-input-item">
                             <FaImages className='homepage-center-input-icon' size='30'/> Picture
@@ -268,7 +269,7 @@ if(loggedIn == false){
                      <input id='postPicture' type='file' name='postPic' className='compose-center-input2' 
                         onChange={selectPostPic}/>
                     </label>
-                </div>  
+                </div>  </>}
             </Grid>
             <Grid item xs={false} sm={2} className="compose-right">
             </Grid>

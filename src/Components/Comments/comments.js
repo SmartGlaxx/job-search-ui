@@ -63,7 +63,14 @@
         const setFormForUpdate =()=>{
             setCommentForm(!commentForm)
             setShowUpdatePostForm(!showUpdatePostForm)
+            setUpdateCommentValue(userComment)
             // setShowCommentOptions(!showCommentOptions)
+        }
+
+        const commentResponse = (value) =>{
+            setCommentSent(value)
+            setUpdateCommentValue('')
+            setCommentForm(!commentForm)
         }
         
 //Update comment
@@ -88,7 +95,7 @@ const commentUpdate = async()=>{
         const {response} = result.data
         
         if(response == 'Success'){
-            setCommentSent(commentSent)
+            commentResponse(commentSent)
         }else{
             setError({status : true, msg : "Failed to update post"})
         }
@@ -114,7 +121,7 @@ const commentUpdate = async()=>{
             const {response} = result.data
             
             if(response == 'Success'){
-                 setCommentSent(commentSent)
+                setCommentSent(commentSent)
             }else{
                 setError({status : true, msg : "Failed to delete comment"})
             }
@@ -196,7 +203,7 @@ const commentUpdate = async()=>{
         {
             commentForm && <form>
                 <input type='text' value={updateCommentValue} onChange={(e)=>setUpdateCommentValue(e.target.value)} className='comment-input' /><br />
-                <Button style={{float:"right", marginTop:"-1.85rem"}} onClick={commentUpdate}><FaTelegramPlane className='submit-icon'/></Button>
+                <Button style={{float:"right", marginTop:"-1.9rem"}} onClick={commentUpdate}><FaTelegramPlane className='submit-icon'/></Button>
             </form>
         }
     </div> 

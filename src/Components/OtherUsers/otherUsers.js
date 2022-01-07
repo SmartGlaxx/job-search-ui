@@ -8,6 +8,7 @@ import LoadingIcons from 'react-loading-icons'
 import Profile from "../../assets/profile.jfif"
 import { Link } from 'react-router-dom';
 import ProfileImage from '../../assets/profile.jpg'
+import { Button } from '@material-ui/core';
 
 const OtherUsers = ()=>{
     const {loading, setNewCurrentUser, currentUser, currentUserParsed, setTempAllusers, tempAllUsers, allUsers, setLoading,
@@ -126,8 +127,9 @@ if(loading){
         }
         </div>
     </div>
-    <button className='more-btn' onClick={()=>setRandomUsers(allUsers)} 
-    style={{background:"var(--button-background)"}}>More Users</button>
+    <Button className='more-btn' onClick={()=>setRandomUsers(allUsers)} 
+    style={{background:"var(--color)", padding:'0.1rem 1rem', marginTop:"-1rem",
+    color: "var(--background-color)"}}>More Users</Button>
     </div>
 }
 

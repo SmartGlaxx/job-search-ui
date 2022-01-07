@@ -9,7 +9,7 @@ import ProfileImage from '../../assets/profile.jpg'
 import TimeAgo from 'timeago-react'
 import { useEffect, useState } from 'react'
 import {FaExclamationCircle, FaThumbsUp, FaComment, FaEllipsisH, FaShare, FaWindowClose, 
-    FaPen, FaTrash, FaTelegramPlane, FaEdit} from 'react-icons/fa'
+    FaPen, FaTrash, FaTelegramPlane, FaTimes} from 'react-icons/fa'
     import axios from 'axios'
     import { UseAppContext } from '../../Contexts/app-context'
     import { Backdrop } from '../'
@@ -96,6 +96,7 @@ const [anchorEl3, setAnchorEl3] = React.useState(null);
         setShowUpdatePostForm(false)
     }
     const setFormForUpdate =()=>{
+        setUpdateValue(description)
         setCommentForm(false)
         setShowUpdatePostForm(!showUpdatePostForm)
     }
@@ -106,6 +107,16 @@ const [anchorEl3, setAnchorEl3] = React.useState(null);
         setPostCreated(value2)
         setTimeout(()=>{
             setPostCreated(value3)
+        }, 3000)
+    }
+
+    const setPostResponse = (value)=>{
+        setUpdateValue('')
+        setShowUpdatePostForm(!showUpdatePostForm)
+        setShareForm(false)
+        setPostCreated(true)
+        setTimeout(()=>{
+            setPostCreated(false)
         }, 3000)
     }
   
@@ -261,12 +272,7 @@ const postUpdate = async()=>{
         const result = await axios(options)
         const {response} = result.data
         if(response == 'Success'){
-            setUpdateValue(updateValue)
-            setShareForm(false)
-            setPostCreated(true)
-            setTimeout(()=>{
-                setPostCreated(false)
-            }, 3000)
+            setPostResponse(updateValue)
         }else{
             setError({status : true, msg : "Failed to update post"})
         }
@@ -350,8 +356,12 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                     showDeletePostDialog && <div className='backdrop' onClick={()=>setShowDeletePostDialog(false)}>
                     <div className='delete-box' >
                         <form>
-                            <Button onClick={()=>setShowDeletePostDialog(false)}>Cancel</Button>
-                            <Button onClick={()=>deletePost(id)}>Delete Post</Button>
+                            <Button onClick={()=>setShowDeletePostDialog(false)}>
+                                <FaTimes  style={{color:"var(--color4)"}}/>
+                            </Button>
+                            <Button onClick={()=>deletePost(id)}>
+                                <FaTrash style={{color:"var(--color-close)"}}  />
+                            </Button>
                         </form>
                     </div>
                     </div>
@@ -376,8 +386,12 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                         }}
                     >
                         <Typography className={classes.typography}>
-                            <Button onClick={setFormForUpdate}><FaEdit /></Button>
-                            <Button onClick={handleClick2}><FaTrash /></Button>
+                            <Button onClick={setFormForUpdate}>
+                                <FaPen style={{color:"var(--color-7)"}}/>
+                            </Button>
+                            <Button onClick={handleClick2}>
+                                <FaTrash style={{color:"var(--color-close)"}} />
+                            </Button>
                         </Typography>
                     </Popover>
                     <Popover
@@ -395,10 +409,14 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                         }}
                     >
                         <Typography className={classes.typography}>
-                        <div className='delete-box' >
+                        <div className='delete-box-2' >
                             <form>
-                                <Button onClick={()=>setShowDeletePostDialog(false)}>Cancel</Button>
-                                <Button onClick={()=>deletePost(id)}>Delete Post</Button>
+                                <Button onClick={handleClose2}>
+                                    <FaTimes style={{color:"var(--color4)"}}/>
+                                </Button>
+                                <Button onClick={()=>deletePost(id)}>
+                                    <FaTrash style={{color:"var(--color-close)"}} />
+                                </Button>
                             </form>
                         </div>
                         </Typography>

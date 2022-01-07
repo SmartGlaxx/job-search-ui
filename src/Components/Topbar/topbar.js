@@ -88,7 +88,9 @@ const Topbar =()=>{
      
     return <Grid className='topbarContainer' container>
         <Grid className="topLeft" item xs ={9} sm={3} >
-            <div className='mainlogo'>SC</div>
+            <div className='mainlogo'>
+                <Link to='/' className='mainlogo-link'>SC</Link>
+            </div>
             <div style={{display:"block"}}>
             <div className='topLeft-inner'>
                 <FaSearch className='icons2' />

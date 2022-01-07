@@ -21,6 +21,9 @@
 ;
 
 }
+.mainlogo-link{
+    text-decoration: none;
+}
 
 .topLeft{
     flex: 3;

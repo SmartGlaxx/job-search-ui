@@ -266,12 +266,12 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed && !currentUserParsed.connections.includes(allUser._id) && !currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={ProfileImage} alt={firstname} className="connections-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} alt={firstname} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -298,12 +298,12 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={ProfileImage} alt={username} className="connections-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -327,12 +327,12 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed.sentConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={ProfileImage} alt={username} className="connections-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -351,12 +351,12 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed.connections.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={ProfileImage} alt={username} className="connections-img"/>
+                                <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
                             </Link>
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>

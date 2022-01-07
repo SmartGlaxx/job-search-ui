@@ -184,9 +184,8 @@
     color: var(--color-close);
     float: right;
 }
-.delete-box{
+.delete-box-2{
     background: var(--background-color);
-    padding: var(--section-padding);
 }
 .backdrop{
     display: grid;

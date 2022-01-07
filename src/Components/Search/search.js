@@ -19,7 +19,8 @@ const Search = ()=>{
       { foundUsers.length > 0 ? foundUsers.map(user =>{
             
             const {_id, firstname, lastname, username, profilePicture} = user
-            return<Link to={`/userprofile/${_id}/${username}`} onClick={()=>setSearchTermValue('')}>
+            return<Link to={`/userprofile/${_id}/${username}`} className="profile-link"
+             onClick={()=>setSearchTermValue('')}>
                 <div className="search-result"> 
                 <div className="search-item-box">
                     <img src={profilePicture ? profilePicture : ProfileImage} className='search-img'/>
