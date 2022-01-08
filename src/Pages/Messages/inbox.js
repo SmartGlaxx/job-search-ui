@@ -4,7 +4,7 @@ import { UseAppContext } from "../../Contexts/app-context"
 import { Topbar, Sidebar, Backdrop } from "../../Components"
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { FaImages, FaSearch } from 'react-icons/fa'
+import { FaImages, FaSearch, FaPlusSquare } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 import LoadingIcons from 'react-loading-icons'
@@ -12,7 +12,7 @@ import { LeftNavigation } from '../../Components'
 import Profile from "../../assets/profile.jfif"
 
 const Inbox = () =>{
-    const {loggedIn, currentUserParsed} = UseAppContext()
+    const {loading, loggedIn, allUsers, currentUserParsed} = UseAppContext()
     const [newAllMessages, setNewAllMessages] = useState([])
     const [userUniqueIds, setUserUniqueIds] = useState([])
     const [fetchedUsers, setFetchedUsers] = useState([])
@@ -83,8 +83,11 @@ useEffect(()=>{
 
 
 
-if(loggedIn == false){
-    return window.location.href = '/login'
+if(loading || allUsers.length == 0 || !currentUserParsed._id){
+    return <div style={{width: "100%",height : "100vh", 
+    display: 'grid', placeItems: "center"}}>
+       <LoadingIcons.Puff  stroke="#555" strokeOpacity={.9} />
+   </div>
 }
 
 
@@ -101,7 +104,7 @@ if(loggedIn == false){
                     <FaSearch className='icons2' />
                     <input type='search' className='message-search' placeholder='Search Messages'/>
                 </div>
-                <Link to='/composemessage'>New Message</Link>
+                <Link to='/composemessage' className='message-header'><FaPlusSquare  size='25'/></Link>
                 <div className='unread-messages'>
                     {
                     fetchedUsers.length && userUniqueIds.length ? fetchedUsers.map(user => {
@@ -113,14 +116,18 @@ if(loggedIn == false){
                                     otherUername = otherUsername.slice(0,1).toUpperCase().concat(otherUsername.slice(1).toLowerCase())
                                 }
                                 return <div className='inbox-userbox'>
-                                    <img src={profilePicture ? profilePicture : Profile} className='inbox-photo'/>
-                                    <Link to={`/chat/${userId}/${userUsername}/${id}/${otherUsername}`} className='inbox-name'>{otherUername}</Link><br/>
+                                    <Link to={`/chat/${userId}/${userUsername}/${id}/${otherUsername}`} className='inbox-name'>
+                                    <div className='inbox-items'>
+                                        <img src={profilePicture ? profilePicture : Profile} className='inbox-photo'/>
+                                        <span className='inbox-name'>{otherUername}</span>
+                                    </div>
+                                    </Link><br/>
                                     </div>
                             }
                          }) : 
                          <div style={{width: "100%",height : "5rem", 
                              display: 'grid', placeItems: "center"}}>
-                                <h4>No Messages in your inbox</h4>
+                                <h4 className='no-message'>No Messages in your inbox</h4>
                              <LoadingIcons.Puff  stroke="#555" strokeOpacity={.9} />
                          </div>  
                           

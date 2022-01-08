@@ -310,16 +310,12 @@
     cursor: pointer;
 }
 .post-btn{
-    width: 15%;
+    /* width: 15%;
     cursor: pointer;
     height: var(--btn-height);
-    background: var(--background-color);
-    /* font-size: var(--btn-font-size); */
+    background: var(--background-color);s
     font-weight: var(--btn-font-weight);
-    /* position: absolute;
-    right: 0rem;
-    top:0; */
-     border: 1px solid var(--background-color-2);
+     border: 1px solid var(--background-color-2); */
 }
 .btn-box{
     height: auto;

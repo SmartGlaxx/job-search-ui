@@ -67,7 +67,7 @@
     transition: all 0.4s;
     cursor: pointer;
     float: right;
-    z-index: 20;
+    z-index: 2;
 }
 .more-btn:hover{
     color: var(--background-color-2)

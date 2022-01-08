@@ -871,7 +871,7 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
                     <button className='post-btn' onClick={submit}>Post</button>
                 </div>     
             </div> 
-           
+            
             }
             <div className='profile-center-middle'>
               {!timeline  ?
