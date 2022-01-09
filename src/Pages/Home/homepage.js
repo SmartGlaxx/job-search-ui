@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import './homepage.css'
 import { Grid } from '@material-ui/core'
-import { FaUserAlt, FaImages, FaExclamationCircle } from 'react-icons/fa'
+import { FaUserAlt, FaImages, FaExclamationCircle, FaPlane, FaTelegramPlane, FaWindowClose } from 'react-icons/fa'
 import { UseAppContext } from '../../Contexts/app-context'
-import {Topbar, Sidebar, Backdrop, Posts} from '../../Components';
+import {Topbar, Sidebar, Backdrop, Posts, Ads} from '../../Components';
 import {Link, useNavigate} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
 import Axios from 'axios'
@@ -11,13 +11,13 @@ import OtherUsers from '../../Components/OtherUsers/otherUsers'
 import LoadingIcons from 'react-loading-icons'
 import Button from '@restart/ui/esm/Button'
 import { LeftNavigation } from '../../Components'
-
+import ProfileImage from '../../assets/profile.jpg'
 
 const HomePage =()=>{
 const {loggedIn, loading, setLazyLoading, lazyLoading, currentUser,timelineposts, allUsers, postcreated, 
     setPostCreated, currentUserParsed, fetchedUser} = UseAppContext()
 const {_id : userId, username : userUsername, followings, followers, 
-    profilePicture : userProfilePicture, coverPicture : userCoverPicture} = fetchedUser
+    profilePicture , coverPicture : userCoverPicture} = currentUserParsed
 const [formValue, setFormValue] = useState('')
 const [error, setError] = useState({status : false, msg:''})
 const {_id , username} = JSON.parse(currentUser)
@@ -45,15 +45,12 @@ const setPostData = (value1, value2)=>{
         setPostCreated(false)
     }, 3000)
 }
-// const setPostData = (value1, value2)=>{
-//     setAlertMsg({status : value1, msg : value2})
-//     setPostPreviewBox(false)
-//     setPostCreated(true)
-//     setFormValue('')
-//     setTimeout(()=>{
-//         setPostCreated(false)
-//     }, 3000)
-// }
+
+const setCancelValues = ()=>{
+    setPostPreviewBox(false)
+    setFormValue('')
+    setPostImage('')
+}
 
 //select post pic
 const selectPostPic = (e)=>{
@@ -308,7 +305,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
             <div className='homepage-center-top'>
                 <div className='homepage-center-top-inner'>
                 <Link to={`/userprofile/${_id}/${username}`}>
-                    <FaUserAlt className='icon' size='30'/>
+                    <img src={profilePicture ? profilePicture : ProfileImage} className="post-profile-img" />
                 </Link>
                     <input type='hidden' name='userId' />
                     <input type='hidden'  name='username'/>
@@ -320,20 +317,44 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                 }   
                 <hr className='homepage-center-top-hr'/>
                 {postPreviewBox && 
-                    <div className='post-img-preview-box'>
+                    <div className='post-img-preview-contaner'>
+                        <div className='preview-top'>
+                            <img src={profilePicture ? profilePicture : ProfileImage} className="post-profile-img-2" />
+                            <input type='hidden' name='userId' />
+                            <input type='hidden'  name='username'/>
+                            <input type='text' name='post-input' placeholder='Make a post' className='homepage-center-input-2' 
+                        value={formValue} onChange={setValues}/>
+                        </div>
                         <img src={postPicturePreview} alt='Error loading preview' className='post-img-preview-2'/>
-                        <Button onClick={()=>setPostPreviewBox(false)}>Cancel</Button>
+                        <div className='preview-bottom'>
+                            <div className='homepage-center-input-item-2'onClick={setCancelValues} >
+                            <FaWindowClose  className='homepage-center-input-icon-close' size='25' />
+                            <span className='picture-name'>
+                                Cancel
+                            </span>
+                            </div>
+                            <div className='homepage-center-input-item-2'onClick={submit} >
+                            <FaTelegramPlane  className='homepage-center-input-icon' size='25' />
+                            <span className='picture-name'>
+                                Post
+                            </span>
+                            </div>
+                        </div>
                     </div>
                     }
                 <div className='homepage-center-top-inner2'>
                  <label htmlFor='postPicture' >
                         <div className="homepage-center-input-item">
-                            <FaImages className='homepage-center-input-icon' size='30'/> Picture
+                            <FaImages className='homepage-center-input-icon-picture' size='25'/> 
+                            <span className='picture-name'>Picture</span>
                        </div>
                      <input id='postPicture' type='file' name='postPic' className='homepage-center-input2' 
                         onChange={selectPostPic}/>
                     </label>
-                    <button className='post-btn' onClick={submit}>Post</button>
+                    <div className='homepage-center-input-item'onClick={submit} >
+                        <FaTelegramPlane  className='homepage-center-input-icon' size='25' />
+                        <span className='picture-name'>Post</span>
+                    </div>
                 </div>   
             </div>    
             <div className='homepage-center-middle'>
@@ -368,7 +389,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
             </div>
         </Grid>
         <Grid className='homepage-right' item xs={false} sm={3} >
-            three
+            <Ads />
         </Grid>
     
     </Grid>

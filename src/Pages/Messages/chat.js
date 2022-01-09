@@ -11,6 +11,7 @@ import Axios from 'axios'
 import SinglgeMessage from './singleMessage'
 import { Satellite } from '@material-ui/icons'
 import { LeftNavigation } from '../../Components'
+import { Ads } from '../../Components'
 
 const Chat = ()=>{
 
@@ -375,7 +376,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                 <form className="message-img-label-box" enctype="multipart/form-data">
                     {idCurrent == userId && usernameCurrent == userUsername && <label htmlFor='messagePicture'  >
                         {/* <div style={{ position: "absolute", top:"0rem", right:"0rem", width:"2rem", background:"green", padding:"0.0.4rem"}}>  */}
-                            <FaFileImage  className='msg-img-upload-icon' size='23' /> 
+                            <FaImages  className='msg-img-upload-icon' size='23' /> 
                         {/* </div> */}
                     <input id='messagePicture' type='file' name='messagePic' className='homepage-center-input2' 
                     onChange={(e)=>selectMessagePic(e, otherUser.id, otherUser.username)}/>
@@ -397,6 +398,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
 
             </Grid>
          <Grid item xs={false} sm={3} className="chat-right">
+            <Ads /> 
         </Grid>
     </Grid>
     </div>

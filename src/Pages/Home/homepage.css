@@ -68,26 +68,57 @@
     font-size: 1.1rem;
     width:70%;
     border: none;
-    margin-left: 1rem; 
+    margin-left: 4rem; 
     background: var(--background-color-2);
     
+}
+.homepage-center-input-2{
+    font-size: 1.1rem;
+    width: 90%;
+    padding: var(--input-padding);
+    border: none;
+    border-radius: 0.3rem 0.3rem 0 0;
+    box-sizing: border-box;
+    background: var(--background-color-2);
+    opacity: 0.7;
+    margin-left: 0.3rem
 }
 .homepage-center-input2{
     display: none;
 }
-.homepage-center-input-icon{
-    color: #58ce68;
-    
-}
 .homepage-center-input-item{
     display: flex;
     align-items: center;
+    background: var(--background-color);
+    padding: var(--btn-padding);
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+.homepage-center-input-item-2{
+    display: flex;
+    align-items: center;
+    background: var(--background-color);
+    padding: var(--btn-padding);
+    border-radius: 0.3rem;
+    margin-top: 1rem;
+    cursor: pointer;
 }
 .homepage-center-input-icon{
     margin-right: 0.4rem;
+    color: var(--color-success )
 }
-
+.homepage-center-input-icon-close{
+    margin-right: 0.4rem;
+    color: var(--color-close);
+}
+.homepage-center-input-icon-picture{
+    margin-right: 0.4rem;
+    color: var(--color-picture-icon)
+}
 .homepage-center-input:focus{
+    outline: none;
+}
+.homepage-center-input-2{
     outline: none;
 }
 
@@ -106,47 +137,110 @@
     /* border-radius: 50%; */
     cursor: pointer;
 }
-.post-btn{
+.home-post-btn{
+    /* width: 8rem;
+    background: var(--background-color);
+    background-color: red;
+    font-size: var(--button-font-size);
+     border: 1px solid var(--background-color-2); */
+    background: var(--background-color);
+    font-size: var(--button-font-size);
+     /* padding: var(--btn-padding-2); */
+     border-radius: 0.3rem;
+     border :none;
+     /* margin-top: 1rem; */
+     cursor : pointer;
+     font-weight: 600;
+}
+.bottom-post-btns{
+    /* font-weight: 700;
     width: 15%;
     height: var(--btn-height);
     background: var(--background-color);
     font-size: var(--button-font-size);
-    /* position: absolute;
-    right: 0rem;
-    top:0; */
-     border: 1px solid var(--background-color-2);
+     border: 1px solid var(--background-color-2); */
+     background: var(--background-color);
+     font-size: var(--button-font-size);
+     padding: var(--btn-padding-2);
+     border-radius: 0.3rem;
+     border :none;
+     margin-top: 1rem;
+     cursor : pointer;
+     font-weight: 600;
+}
+
+.picture-name{
+    font-weight: 600;
 }
 
 .homepage-right{
     flex : 3;
     position: sticky;
-    top: 10rem;
-    height: 100vh;
-    background: red;
+    top: 5rem;
+    height: calc(100vh - 6rem);
+    overflow-y: scroll;
+    background: var(--ad-background)
 }
 
 .lazyloader{
     display: grid;
     align-items: center;
 }
+.preview-top{
+    display: flex;
+    width: 90%;
+    align-items: center;
+}
+.preview-bottom{
+    display: flex;
+    width: 90%;
+    align-items: center; 
+    justify-content: space-around;
+}
+.post-profile-img{
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    margin-top: -0.8rem;
+    object-fit: cover;
+}
 
-.post-img-preview-box{
+.post-profile-img-2{
+    margin-right: auto;
+    border-radius: 50%;
+    width: 2.7rem;
+    height: 2.7rem;
+    position: relative;
+    object-fit: cover;
+}
+
+.post-img-preview-contaner{
     position: absolute;
     left: 50%;
-    top: -15rem;
+    border-radius: 0.3rem;
+    padding: var(--input-padding);
     transform: translateX(-50%);
-    width: 90%;
-    height: 15rem;
+    width: 80%;
+    height: auto;
     display: grid;
     place-items: center;
-    background: gray;
+    background: var(--preview-background);
+    top: 2rem;
     z-index: 3;
+    box-shadow:
+  0.6px 2.8px 2.2px rgba(0, 0, 0, 0.056),
+  1.5px 6.7px 5.3px rgba(0, 0, 0, 0.081),
+  2.8px 12.5px 10px rgba(0, 0, 0, 0.1),
+  4.9px 22.3px 17.9px rgba(0, 0, 0, 0.119),
+  9.2px 41.8px 33.4px rgba(0, 0, 0, 0.144),
+  22px 100px 80px rgba(0, 0, 0, 0.2);
  
 }
 
 .post-img-preview-2{
-    margin-top: 40rem;
-    width: 100%;
+    /* margin-top: 40rem; */
+    width: 90%;
     object-fit: cover;
 }
 .timeline-posts{

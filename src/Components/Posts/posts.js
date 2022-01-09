@@ -99,6 +99,7 @@ const [anchorEl3, setAnchorEl3] = React.useState(null);
         setUpdateValue(description)
         setCommentForm(false)
         setShowUpdatePostForm(!showUpdatePostForm)
+        handleClose1()
     }
 
     const setPostData = (value1, value2, value3)=>{
@@ -387,10 +388,10 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                     >
                         <Typography className={classes.typography}>
                             <Button onClick={setFormForUpdate}>
-                                <FaPen style={{color:"var(--color-7)"}}/>
+                                <FaPen style={{color:"var(--color-7)"}}/> Update
                             </Button>
                             <Button onClick={handleClick2}>
-                                <FaTrash style={{color:"var(--color-close)"}} />
+                                <FaTrash style={{color:"var(--color-close)"}} /> Delete
                             </Button>
                         </Typography>
                     </Popover>
@@ -409,13 +410,14 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                         }}
                     >
                         <Typography className={classes.typography}>
+                        Comfirm Delete
                         <div className='delete-box-2' >
                             <form>
                                 <Button onClick={handleClose2}>
-                                    <FaTimes style={{color:"var(--color4)"}}/>
+                                    <FaTimes style={{color:"var(--color4)"}}/> Cancel
                                 </Button>
                                 <Button onClick={()=>deletePost(id)}>
-                                    <FaTrash style={{color:"var(--color-close)"}} />
+                                    <FaTrash style={{color:"var(--color-close)"}} /> Delete
                                 </Button>
                             </form>
                         </div>
@@ -469,7 +471,8 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                      commentForm && <form>
                         <input type ='text' placeholder='Write a comment...' className='comment-input'
                         value = {commentValue} onChange={(e)=>setCommentValue(e.target.value)}/>
-                        <Button style={{float:"right", marginTop:"-1.85rem"}} onClick={postComments}><FaTelegramPlane className='submit-icon'/></Button>
+                        <Button style={{float:"right", marginTop:"-2rem"}} onClick={postComments}>
+                            <FaTelegramPlane className='submit-icon'/></Button>
                     </form>
                     }
                     <Popover

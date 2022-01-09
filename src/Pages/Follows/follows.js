@@ -4,7 +4,6 @@ import './follows.css'
 import axios from 'axios'
 import { Grid } from '@material-ui/core'
 import { FaUserAlt, FaUsers, FaImages, FaExclamationCircle, FaHome, FaUser, FaAngleRight, FaAngleLeft} from 'react-icons/fa'
-import { Dummy } from '../dummy'
 import {Topbar, Sidebar, Backdrop} from '../../Components';
 import { UseAppContext } from '../../Contexts/app-context'
 import {Link, useNavigate} from 'react-router-dom'
@@ -349,8 +348,8 @@ const unfollow =async(e, id, followedUsername)=>{
         <LeftNavigation />   
         </Grid> 
             <Grid className='follows-center' xs={12} item sm={12} md={10} > 
-            <h2>Followers({userFollowers.length})</h2>
-            <h4>People following you</h4><br />
+            <h2>Follows</h2>
+            <h4>Followers (People following you)({userFollowers.length})</h4><br />
             <div className='follows-center-inner' >
             {
             tempAllUsers &&
@@ -368,8 +367,7 @@ const unfollow =async(e, id, followedUsername)=>{
                 })
             }
             </div>
-            <h2>Followings({userFollowings.length})</h2>
-            <h4>People you Follow </h4>
+            <h4>Followings (People you Follow)({userFollowings.length}) </h4>
             <br />
             <div className='follows-center-inner' >
             {

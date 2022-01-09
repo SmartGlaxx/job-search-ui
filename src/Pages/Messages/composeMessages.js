@@ -4,12 +4,15 @@ import { UseAppContext } from "../../Contexts/app-context"
 import { Topbar, Sidebar, Backdrop } from "../../Components"
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { FaImages } from 'react-icons/fa'
+import { FaImages, FaTelegramPlane, FaWindowClose } from 'react-icons/fa'
 import { LeftNavigation } from '../../Components'
 import { Link } from 'react-router-dom';
+import LoadingIcons from 'react-loading-icons'
+import ProfileImage from '../../assets/profile.jpg'
+import { Ads } from '../../Components'
 
 const ComposeMessages = () =>{
-const {loggedIn, currentUserParsed, allUsers, setPostCreated, setTestValue} = UseAppContext()
+const {loading, loggedIn, currentUserParsed, allUsers, setPostCreated, setTestValue} = UseAppContext()
 const [error, setError] = useState({status : false, msg:''})
 const [alertMsg, setAlertMsg] = useState({status : false, msg : ''})
 const [postPicturePreview, setPostPicturePreview] = useState('')
@@ -18,10 +21,11 @@ const [postPreviewBox, setPostPreviewBox] = useState(false)
 const [chatCreated, setChatCreated] = useState(false)
 const [messageImage, setMessageImage] = useState('')
 const [messageImagePreviewBox, setMessageImagePreviewBox] = useState(false)
-const {_id, username, connections} = currentUserParsed
+const {_id, username, connections, profilePicture} = currentUserParsed
 const [formData, setFormData] = useState({
     recipient : "",
-    message : ""
+    message1 : "",
+    message2 : ""
 })
 
 const setPostData = (value1, value2)=>{
@@ -30,7 +34,8 @@ const setPostData = (value1, value2)=>{
     setChatCreated(!chatCreated)
     setFormData({
         recipient : "",
-        message : ""
+        message1 : "",
+        message2 : ""
     })
 }
 
@@ -72,7 +77,7 @@ const sendMessage = async(e)=>{
     const userData = formData.recipient
     const recipientId = userData.split(' ')[0]
     const recipientUsername = userData.split(' ')[1]
-    if(!formData.recipient || !formData.message){
+    if(!formData.recipient && (!formData.message1 || !formData.message2)){
         return setError({status : true, msg:'Please select a recipient and enter your message'})
     }
     
@@ -85,7 +90,7 @@ const sendMessage = async(e)=>{
     const result = await Axios.post(`https://smart-job-search.herokuapp.com/api/v1/messages/uploadmessageimage/${_id}/${username}`, fd)
 
     const {src : imgSrc} = result.data.image
-
+        const message = formData.message2
         const options = {
             url: url,
             method : "POST",
@@ -98,7 +103,7 @@ const sendMessage = async(e)=>{
                 senderUsername : username,
                 receiverId : recipientId,
                 receiverUsername : recipientUsername,
-                message : formData.message,
+                message : message,
                 img : imgSrc
             }
         }
@@ -125,6 +130,7 @@ const sendMessage = async(e)=>{
                 setError({status : false, msg :''})
             }, 4000)
         }
+        const message = formData.message1
             const options = {
                 url: url,
                 method : "POST",
@@ -137,7 +143,7 @@ const sendMessage = async(e)=>{
                     senderUsername : username,
                     receiverId : recipientId,
                     receiverUsername : recipientUsername,
-                    message : formData.message
+                    message : message
                 }
             }
             
@@ -207,9 +213,13 @@ const setMessageImgePicture = (value)=>{
     setTestValue(value)
 }
 
-if(loggedIn == false){
-    return window.location.href = '/login'
+if(loading || allUsers.length == 0 || !currentUserParsed._id){
+    return <div style={{width: "100%",height : "100vh", 
+    display: 'grid', placeItems: "center"}}>
+       <LoadingIcons.Puff  stroke="#555" strokeOpacity={.9} />
+   </div>
 }
+
 const {_id : userId , firstname, lastname} = currentUserParsed
     return <div>
         <Topbar />
@@ -217,18 +227,30 @@ const {_id : userId , firstname, lastname} = currentUserParsed
         <Backdrop />
         <Grid container>
             {postPreviewBox && 
-                <Grid item xs={12} className='preview-container'>
                 <div className='message-img-preview-box'>
-                    <>
                         <img src={postPicturePreview} alt='Error loading preview' className='message-img-preview-2'/>
-                        
-                        <div className='pic-upload-btn'>
-                            <Button onClick={()=>setPostPreviewBox(false)}>Cancel</Button>
-                            <Button onClick={()=>uploadMessagePicture(messageImage)}>Send Picture</Button>
+                        <div className='preview-bottom'>
+                            <img src={profilePicture ? profilePicture : ProfileImage} className="message-profile-img-2" />
+                            <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
+                            cols='20' rows='3' name='message2' className='forminput' value={formData.message}></textarea>
+                    </div>
+                       
+                        <div className='preview-bottom'>
+                            <div className='homepage-center-input-item-2'  onClick={()=>setPostPreviewBox(false)}>
+                            <FaWindowClose  className='homepage-center-input-icon-close' size='25' />
+                            <span className='picture-name'>
+                                Cancel
+                            </span>
+                            </div>
+                            <div className='homepage-center-input-item-2'onClick={sendMessage} >
+                            <FaTelegramPlane  className='homepage-center-input-icon' size='25' />
+                            <span className='picture-name'>
+                                Post
+                            </span>
+                            </div>
                         </div>
-                        </>
+                   
                 </div>
-                </Grid>
                 }
             <Grid item xs={false} sm={2} className="">
                 <LeftNavigation />
@@ -240,38 +262,41 @@ const {_id : userId , firstname, lastname} = currentUserParsed
             <form className="compose-center-form">
                 <input type='hidden'  value={username} name='from' className='forminput' /><br />
                 {connections && connections.length > 0 && <> <span>From:</span> {`${firstname} ${lastname}`}<br /></> }
-                {connections && connections.length > 0 && <><span>To:</span> <select type='text' onChange={setFormValue} name='recipient' className='forminput'>
-                <option selected>Select Recipient</option>
-                {
-                allUsers.length > 1 && allUsers.map(allUser =>{
-                    if(connections && connections.includes(allUser._id)){
-                        const {_id, username, firstname, lastname} = allUser           
-                        return <option value={`${_id} ${username}`} key = {_id}>{`${firstname} ${lastname}`}</option>
+                {connections && connections.length > 0 && <><span>To:</span> 
+                <select type='text' onChange={setFormValue} name='recipient' className='forminput'>
+                    <option selected>Select Recipient</option>
+                    {
+                    allUsers.length > 1 && allUsers.map(allUser =>{
+                        if(connections && connections.includes(allUser._id)){
+                            const {_id, username, firstname, lastname} = allUser           
+                            return <option value={`${_id} ${username}`} key = {_id}>{`${firstname} ${lastname}`}</option>
+                        }
+                        
+                    }) 
                     }
-                    
-                }) 
-                }
                 </select></>}
                 <br />
                 {connections && connections.length < 1 && <div className='no-connection'>No connections yet. 
                 <Link to={`/connections/${userId}/${username}`} className='connect-link'>Connect</Link> with users to send messages.</div>}
                 {connections && connections.length > 0 && <> <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
-                cols='20' rows='5' name='message' className='forminput' value={formData.message}></textarea><br /></>}
+                cols='20' rows='5' name='message1' className='forminput' value={formData.message}></textarea><br /></>}
                 
-                {connections && connections.length > 0 && <Button  className='formbutton' onClick={sendMessage}>Send</Button>}
+                {connections && connections.length > 0 && <Button  className='formbutton' onClick={formData.recipient && sendMessage}>
+                    <FaTelegramPlane  className= {formData.recipient ? `message-input-icon-picture`:  `message-input-icon-pictur-2` } size='25'/>Send</Button>}
             </form>
             </div>
             {connections && connections.length > 0 && <> <div className='compose-center-top-inner2'>
-                 <label htmlFor='postPicture' >
+                 <label htmlFor='postPicture'>
                         <div className="homepage-center-input-item">
-                            <FaImages className='homepage-center-input-icon' size='30'/> Picture
+                            <FaImages className={formData.recipient ? `homepage-center-input-icon` :`homepage-center-input-icon-2`} size='25'/> Picture
                        </div>
-                     <input id='postPicture' type='file' name='postPic' className='compose-center-input2' 
+                     <input id='postPicture' type={formData.recipient ? `file` : null} name='postPic' className='compose-center-input2' 
                         onChange={selectPostPic}/>
                     </label>
                 </div>  </>}
             </Grid>
             <Grid item xs={false} sm={2} className="compose-right">
+                <Ads />
             </Grid>
         </Grid>
     </div>
