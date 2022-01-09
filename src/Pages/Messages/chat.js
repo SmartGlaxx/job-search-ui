@@ -11,6 +11,7 @@ import Axios from 'axios'
 import SinglgeMessage from './singleMessage'
 import { Satellite } from '@material-ui/icons'
 import { LeftNavigation } from '../../Components'
+import { Ads } from '../../Components'
 
 const Chat = ()=>{
 
@@ -397,6 +398,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
 
             </Grid>
          <Grid item xs={false} sm={3} className="chat-right">
+            <Ads /> 
         </Grid>
     </Grid>
     </div>

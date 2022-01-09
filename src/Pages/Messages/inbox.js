@@ -10,6 +10,7 @@ import axios from 'axios'
 import LoadingIcons from 'react-loading-icons'
 import { LeftNavigation } from '../../Components'
 import Profile from "../../assets/profile.jfif"
+import { Ads } from '../../Components'
 
 const Inbox = () =>{
     const {loading, loggedIn, allUsers, currentUserParsed} = UseAppContext()
@@ -136,6 +137,7 @@ if(loading || allUsers.length == 0 || !currentUserParsed._id){
                 </div>
             </Grid>
             <Grid item xs={false} sm={2} className="inbox-right">
+                <Ads />
             </Grid>
         </Grid>
     </div>

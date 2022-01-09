@@ -93,6 +93,15 @@
     align-items: center;
 }
 
+.compose-right{
+    flex : 3;
+    position: sticky;
+    top: 5rem;
+    height: calc(100vh - 6rem);
+    overflow-y: scroll;
+    background: var(--ad-background)
+}
+
 
 /* Inbox */
 .inbox-center{
@@ -180,6 +189,13 @@
     color: var(--color2);
     text-decoration: none;
     font-size: 1.1rem;
+}
+.inbox-right{
+    position: sticky;
+    top: 5rem;
+    height: calc(100vh - 6rem);
+    overflow-y: scroll;
+    background: var(--ad-background)
 }
 /* Chat */
 
@@ -287,7 +303,7 @@
     0px 8.7px 6.9px rgba(0, 0, 0, 0.031),
     0px 17.7px 14.2px rgba(0, 0, 0, 0.039),
     0px 36.5px 29.2px rgba(0, 0, 0, 0.048),
-    0px 100px 80px rgba(0, 0, 0, 0.07);;
+    0px 100px 80px rgba(0, 0, 0, 0.07);
 
 }
 .chats-container{
@@ -403,12 +419,14 @@
     width: 80%
 }
 
-/* .reply-btn{
-    width: 5rem;
-    display: none;
-} */
-
-
+.chat-right{
+    flex : 3;
+    position: sticky;
+    top: 5rem;
+    height: calc(100vh - 6rem);
+    overflow-y: scroll;
+    background: var(--ad-background)
+}
 
 
 /* SingleMessage */

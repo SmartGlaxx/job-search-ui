@@ -3,7 +3,7 @@ import './homepage.css'
 import { Grid } from '@material-ui/core'
 import { FaUserAlt, FaImages, FaExclamationCircle, FaPlane, FaTelegramPlane, FaWindowClose } from 'react-icons/fa'
 import { UseAppContext } from '../../Contexts/app-context'
-import {Topbar, Sidebar, Backdrop, Posts} from '../../Components';
+import {Topbar, Sidebar, Backdrop, Posts, Ads} from '../../Components';
 import {Link, useNavigate} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
 import Axios from 'axios'
@@ -389,7 +389,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
             </div>
         </Grid>
         <Grid className='homepage-right' item xs={false} sm={3} >
-            three
+            <Ads />
         </Grid>
     
     </Grid>

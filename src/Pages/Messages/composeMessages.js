@@ -9,6 +9,7 @@ import { LeftNavigation } from '../../Components'
 import { Link } from 'react-router-dom';
 import LoadingIcons from 'react-loading-icons'
 import ProfileImage from '../../assets/profile.jpg'
+import { Ads } from '../../Components'
 
 const ComposeMessages = () =>{
 const {loading, loggedIn, currentUserParsed, allUsers, setPostCreated, setTestValue} = UseAppContext()
@@ -295,6 +296,7 @@ const {_id : userId , firstname, lastname} = currentUserParsed
                 </div>  </>}
             </Grid>
             <Grid item xs={false} sm={2} className="compose-right">
+                <Ads />
             </Grid>
         </Grid>
     </div>

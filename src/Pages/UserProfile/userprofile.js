@@ -4,7 +4,6 @@ import './userprofile.css'
 import axios from 'axios'
 import { Grid } from '@material-ui/core'
 import { FaUserAlt, FaUsers, FaImages, FaExclamationCircle, FaHome, FaUser, FaCamera, FaEllipsisH } from 'react-icons/fa'
-import { Dummy } from '../dummy'
 import {Topbar, Sidebar, Backdrop, Posts} from '../../Components';
 import { UseAppContext } from '../../Contexts/app-context'
 import {Link, useNavigate} from 'react-router-dom'
