@@ -260,6 +260,11 @@ useEffect(()=>{
     return ()=> window.removeEventListener('scroll', event)
 },[])
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
 if(loggedIn == false){
     return window.location.href = '/login'
 }
@@ -271,7 +276,7 @@ if(loading || allUsers.length == 0){
    </div>
 }
 
-console.log('dsfdg postPreviewBox', postPreviewBox)
+
 const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
 
 
@@ -280,28 +285,10 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
     <Sidebar />
     <Backdrop />
     <Grid className='homepage' container > 
-         <Grid className='' item xs={false} sm={3} >
+         <Grid className='homepage-mobile-disabled' item sm={false} md={3} >
            <LeftNavigation />
-        {/*    <div className='homepage-left-inner' >
-                <div className='homepage-left-top'>
-                <Link to={`/userprofile/${_id}/${username}`}>
-                    <FaUserAlt /> {username}
-                </Link>
-                </div>
-                <ul className='homepage-left-ul'>
-                    <li className='homepage-left-li'>
-                       <Link to={`/connections/${_id}/${username}`}>Connections</Link>
-                    </li>
-                    <li className='homepage-left-li'>
-                        My Connections
-                    </li>
-                    <li className='homepage-left-li'>
-                        Jobs
-                    </li>
-                </ul>
-            </div>*/}
         </Grid> 
-        <Grid className='homepage-center'item xs={12} sm={6} >
+        <Grid className='homepage-center'item xs={12} sm={12} md={6} >
             <div className='homepage-center-top'>
                 <div className='homepage-center-top-inner'>
                 <Link to={`/userprofile/${_id}/${username}`}>
@@ -334,7 +321,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                             </span>
                             </div>
                             <div className='homepage-center-input-item-2'onClick={submit} >
-                            <FaTelegramPlane  className='homepage-center-input-icon' size='25' />
+                            <FaTelegramPlane  className='homepage-center-post-icon' size='25' />
                             <span className='picture-name'>
                                 Post
                             </span>
@@ -352,7 +339,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                         onChange={selectPostPic}/>
                     </label>
                     <div className='homepage-center-input-item'onClick={submit} >
-                        <FaTelegramPlane  className='homepage-center-input-icon' size='25' />
+                        <FaTelegramPlane  className='homepage-center-post-icon' size='25' />
                         <span className='picture-name'>Post</span>
                     </div>
                 </div>   
@@ -388,7 +375,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
             }
             </div>
         </Grid>
-        <Grid className='homepage-right' item xs={false} sm={3} >
+        <Grid className='homepage-right homepage-mobile-disabled' item xs={false} sm={3} >
             <Ads />
         </Grid>
     

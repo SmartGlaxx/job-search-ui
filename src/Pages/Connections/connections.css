@@ -1,6 +1,7 @@
+
 .connections{
     display: flex;
-    color: var(--color4);
+    color: var(--color-7);
     
 }
 /* .connections-left{
@@ -8,6 +9,7 @@
 } */
 .connections-center{
     padding: var(--section-padding);
+    background: var(--background-color-2) ;
 }
 .connections-center-inner{
     display: flex;
@@ -22,18 +24,22 @@
 .connetions-box{
     width: 6rem;
     margin: 0 0.2rem;
-    /* background: green; */
+    background: var(--background-color-9);
+    border-radius: 4%;
+    padding: 0.3rem;
 }
 .connections-img{
-    border-radius: 10%;
+    
     width: 6rem;
     height: 6rem;
     /* margin:0.3rem; */
     object-fit: cover;
 }
 .connections-name{
+    text-transform: capitalize;
+    padding-left: 0.3rem;
     position: absolute;
-    color:var(--color4);
+    color:var(--color3);
     top: 6.5rem;
     width: auto;
     opacity: 0.8;
@@ -47,8 +53,9 @@
     /* position: absolute; */
     bottom: 0.5rem;
     cursor: pointer;
+    color: var(--color-7);
     padding: var(--btn-padding);
-    background: var( --button-background);
+    background: var( --background-color-2);
     font-size: var(--connections-fontsize);
     width: 100%;
     margin-top: 0.5rem;
@@ -101,4 +108,14 @@
 }
 .connect-response{
     display: flex;
+}
+
+/* @media screen and (max-width: 960px){
+
+} */
+
+@media screen and (max-width: 940px){
+    .connections-mobile-disabled{
+        display: none;
+    }
 }

@@ -1,5 +1,5 @@
 .sidebarContainer1{
-    width: 16rem; 
+    width: 18rem; 
     height: 100vh;
     position: fixed;
     top:0;
@@ -10,7 +10,7 @@
     background: var(--background-color);
 }
 .sidebarContainer2{
-    width: 16rem;
+    width: 18rem;
     height: 100vh;
     position: fixed;
     top:0;
@@ -71,7 +71,14 @@
     font-size: 0.9rem;
     color: var(--color);
 }
-
+.sideTop-li-inner{
+    text-decoration: none;
+    color:blue
+}
+.sideTop-li-inner-active{
+    color:green;
+    text-decoration: none;
+}
 .logout{
     float: right;
     display: flex;

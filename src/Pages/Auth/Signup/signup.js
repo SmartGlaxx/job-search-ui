@@ -80,6 +80,11 @@ const Signup =()=>{
     //    </div>
     // }
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
     return (
     <Grid className='signup' container>
         <Grid className='signup-left' item xs={12} sm={6}>

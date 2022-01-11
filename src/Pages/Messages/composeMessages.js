@@ -1,4 +1,5 @@
 import './messages.css'
+import { useRef } from 'react'
 import { Button, Grid } from "@material-ui/core"
 import { UseAppContext } from "../../Contexts/app-context"
 import { Topbar, Sidebar, Backdrop } from "../../Components"
@@ -21,12 +22,19 @@ const [postPreviewBox, setPostPreviewBox] = useState(false)
 const [chatCreated, setChatCreated] = useState(false)
 const [messageImage, setMessageImage] = useState('')
 const [messageImagePreviewBox, setMessageImagePreviewBox] = useState(false)
+const [searchValue, setSearchValue] = useState('')
+const [usersNameValue, setUsersNameValue] = useState('')
+const [chatUserName, setChatUserName] = useState('')
+const [usersFound, setUsersFound] = useState([])
+const [usersList, setUsersList] = useState(false)
 const {_id, username, connections, profilePicture} = currentUserParsed
+const newRef = useRef()
 const [formData, setFormData] = useState({
     recipient : "",
     message1 : "",
     message2 : ""
 })
+
 
 const setPostData = (value1, value2)=>{
     setAlertMsg({status : value1, msg : value2})
@@ -39,13 +47,41 @@ const setPostData = (value1, value2)=>{
     })
 }
 
+//set both search value and value to show in input
+const setSearchValueFunc = (e)=>{
+    setSearchValue(e.target.value)
+    setUsersNameValue(e.target.value)
+}
+
 const setFormValue = (e)=>{
-    const name = e.target.name
-    const value = e.target.value
+    let name = e.target.name
+    let value = e.target.value
     setFormData(prev =>{
         return {...prev, [name]: value}
     })
 }
+
+//set search value to the uses name when selected
+//set users name as empty when selected
+const setButtonValue = (value1, value2, value3, value4)=>{
+    setUsersList(false)
+    const recipientValue = `${value1} ${value2}`
+    const chatUserNameFormated = `${value3} ${value4}`
+    setFormData({...formData, recipient : recipientValue})
+    setSearchValue(chatUserNameFormated)
+    setUsersNameValue('')    
+}
+
+
+useEffect(()=>{
+    setUsersList(true)
+    if(searchValue.length < 1 || !usersFound){
+        setUsersList(false)
+    }
+},[searchValue])
+
+
+console.log('sadfd', usersFound )
 
 
 const selectPostPic = (e)=>{
@@ -213,6 +249,19 @@ const setMessageImgePicture = (value)=>{
     setTestValue(value)
 }
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(()=>{
+    const usersFoundValues  =   allUsers.length > 1 && 
+    allUsers.filter(allUser => allUser._id !== _id && (allUser.firstname.startsWith(searchValue) 
+    || allUser.lastname.startsWith(searchValue) || allUser.username.startsWith(searchValue)))
+
+    setUsersFound(usersFoundValues)
+},[searchValue])
+
 if(loading || allUsers.length == 0 || !currentUserParsed._id){
     return <div style={{width: "100%",height : "100vh", 
     display: 'grid', placeItems: "center"}}>
@@ -221,6 +270,9 @@ if(loading || allUsers.length == 0 || !currentUserParsed._id){
 }
 
 const {_id : userId , firstname, lastname} = currentUserParsed
+
+
+
     return <div>
         <Topbar />
         <Sidebar />
@@ -252,7 +304,7 @@ const {_id : userId , firstname, lastname} = currentUserParsed
                    
                 </div>
                 }
-            <Grid item xs={false} sm={2} className="">
+            <Grid item xs={false} sm={2} className='compose-mobile-disabled'>
                 <LeftNavigation />
             </Grid>
             <Grid item xs={12} sm={8} className="compose-center">
@@ -261,25 +313,32 @@ const {_id : userId , firstname, lastname} = currentUserParsed
             
             <form className="compose-center-form">
                 <input type='hidden'  value={username} name='from' className='forminput' /><br />
-                {connections && connections.length > 0 && <> <span>From:</span> {`${firstname} ${lastname}`}<br /></> }
-                {connections && connections.length > 0 && <><span>To:</span> 
-                <select type='text' onChange={setFormValue} name='recipient' className='forminput'>
-                    <option selected>Select Recipient</option>
-                    {
-                    allUsers.length > 1 && allUsers.map(allUser =>{
-                        if(connections && connections.includes(allUser._id)){
-                            const {_id, username, firstname, lastname} = allUser           
-                            return <option value={`${_id} ${username}`} key = {_id}>{`${firstname} ${lastname}`}</option>
-                        }
-                        
-                    }) 
-                    }
-                </select></>}
+                {connections && connections.length > 0 && <div className='name'> <span>From:</span> {`${firstname} ${lastname}`}<br /></div> }
+                {connections && connections.length > 0 && <div className='name'><span>To: </span> 
+                <input type='text' value={searchValue} onChange={setSearchValueFunc} className='users-search'/>
+                {usersNameValue && <div className='users-list'>
+                {                    
+                    usersFound && usersFound.map(user =>{
+                        const {_id, username, firstname, lastname, profilePicture} = user
+                        return <Button onClick={()=>setButtonValue(_id, username,firstname, lastname)} 
+                        key = {_id} >
+                        <img src={profilePicture ? profilePicture : ProfileImage}  className='search-img'/>
+                            <div className='search-name'>{`${firstname} ${lastname}`}</div>
+                        </Button>
+                    })
+                }
+                </div>}
+
+
+                </div>}
                 <br />
                 {connections && connections.length < 1 && <div className='no-connection'>No connections yet. 
                 <Link to={`/connections/${userId}/${username}`} className='connect-link'>Connect</Link> with users to send messages.</div>}
-                {connections && connections.length > 0 && <> <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
-                cols='20' rows='5' name='message1' className='forminput' value={formData.message}></textarea><br /></>}
+                {connections && connections.length > 0 && <> 
+                <textarea type='text' onChange={setFormValue} placeholder='Your message' variant = 'contained'
+                cols='20' rows='5' name='message1' className='forminput' value={formData.message}></textarea><br 
+                style={{background:"var(--background-color-2)"}}/>
+                </>}
                 
                 {connections && connections.length > 0 && <Button  className='formbutton' onClick={formData.recipient && sendMessage}>
                     <FaTelegramPlane  className= {formData.recipient ? `message-input-icon-picture`:  `message-input-icon-pictur-2` } size='25'/>Send</Button>}
@@ -295,7 +354,7 @@ const {_id : userId , firstname, lastname} = currentUserParsed
                     </label>
                 </div>  </>}
             </Grid>
-            <Grid item xs={false} sm={2} className="compose-right">
+            <Grid item xs={false} sm={2} className="compose-right compose-mobile-disabled">
                 <Ads />
             </Grid>
         </Grid>

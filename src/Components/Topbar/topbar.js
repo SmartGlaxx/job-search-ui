@@ -6,7 +6,7 @@ import {Button, Divider} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import './topbar.css'
 import { Grid } from '@material-ui/core'
-import {FaSearch, FaHome, FaPeopleArrows, FaRegClock, FaUserFriends, FaBriefcase, FaUserAlt, FaTh, FaBell, FaRocketchat, 
+import {FaSearch, FaHome, FaPeopleArrows, FaRegClock, FaUserFriends, FaEnvelope, FaUserAlt, FaTh, FaBell, FaRocketchat, 
     FaChevronCircleDown, FaTools} from 'react-icons/fa' 
 import { UseAppContext } from '../../Contexts/app-context'
 import ListIcon from '@material-ui/icons/List';
@@ -18,19 +18,29 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
+  
 
   //for popover ends
 
 const Topbar =()=>{
      const {setLoggedIn, loggedIn, allUsers, setCurrentUser, currentUser, currentUserParsed, openSidebar,
         setSearchTermValue, searchTermValue} = UseAppContext()
-     const {_id, username, receivedConnectionRequests} = currentUserParsed
+     const {_id, username, firstname, lastname, receivedConnectionRequests} = currentUserParsed
      const [receivedRequests, setReceivedRequests] = useState([])
      let usernameCapitalized = ''
 
-     console.log('smart search term', searchTermValue)
-     if(username){
-         usernameCapitalized = username.slice(0,1).toUpperCase().concat(username.slice(1).toLowerCase())
+     
+    //  if(username){
+    //      usernameCapitalized = username.slice(0,1).toUpperCase().concat(username.slice(1).toLowerCase())
+    //  }
+     let firstnameCapitalized = '';
+     let lastnameCapitalized = ''
+     if(firstname){
+         firstnameCapitalized = firstname.slice(0,1).toUpperCase().concat(firstname.slice(1).toLowerCase())
+     }
+ 
+     if(lastname){
+         lastnameCapitalized = lastname.slice(0,1).toUpperCase().concat(lastname.slice(1).toLowerCase())
      }
      
      // get request users 
@@ -89,7 +99,7 @@ const Topbar =()=>{
     return <Grid className='topbarContainer' container>
         <Grid className="topLeft" item xs ={9} sm={3} >
             <div className='mainlogo'>
-                <Link to='/' className='mainlogo-link'>SC</Link>
+                <Link to='/timeline' className='mainlogo-link'>SC</Link>
             </div>
             <div style={{display:"block"}}>
             <div className='topLeft-inner'>
@@ -107,24 +117,37 @@ const Topbar =()=>{
         <Grid className="topCenter" item xs ={false} sm={5}>
             <div className="topCenter-inner">
                 <ul className="topCenter-ul">
-                    <Link to='/' className="topCenter-li">
+                    <Link to='/timeline'  className= "topCenter-li" >
                         <li >
-                            <FaHome className="icons"  size='25'/>
+                            <FaHome 
+                            className= {window.location.href.indexOf("timeline") > -1 ? `icons-active` :`icons` }
+                             size='25'/>
                         </li>
                     </Link>
-                    <Link to={`/connections/${_id}/${username}`} className="topCenter-li">
+                    <Link to={`/connections/${_id}/${username}`} className= "topCenter-li" >
                         <li >
-                            <FaPeopleArrows className="icons"  size='25'/>
+                            <FaPeopleArrows 
+                            className= {window.location.href.indexOf("connections") > -1 ? `icons-active` :`icons` }
+                            size='25'/>
                         </li>
                     </Link>
-                    <Link to={`/follows/${_id}/${username}`} className="topCenter-li">
+                    <Link to={`/follows/${_id}/${username}`} className= "topCenter-li" >
+                        <li>
+                            <FaUserFriends 
+                            className= {window.location.href.indexOf("follows") > -1 ? `icons-active` :`icons` }
+                            size='25'/>
+                        </li>
+                    </Link>
+                    <Link to='/inbox' className= "topCenter-li" >
                         <li className="topCenter-li">
-                            <FaUserFriends className="icons"  size='25'/>
+                            <FaEnvelope 
+                            className= {window.location.href.indexOf("chat") > -1 ||
+                            window.location.href.indexOf("inbox") > -1 || 
+                            window.location.href.indexOf("composemessage") > -1 ?
+                            `icons-active` :`icons` }
+                            size='25'/>
                         </li>
                     </Link>
-                    <li className="topCenter-li">
-                    <FaBriefcase className="icons"  size='25'/>
-                    </li>
                 </ul> 
             </div>
         </Grid>

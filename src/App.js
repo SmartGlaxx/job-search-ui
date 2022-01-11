@@ -11,7 +11,7 @@ function App() {
        <Routes>
           <Route path='/signup' element={<Signup/>} exact/>
           <Route path='/login' element={<Login/>} exact/>
-         <Route path='/' element={<HomePage/>} exact/>
+         <Route path='/timeline' element={<HomePage/>} exact/>
          <Route path='/userprofile/:id/:username' element={<UserProfile/>} exact/>
          <Route path='/connections/:id/:username' element={<Connections/>} exact/>
          <Route path='/follows/:id/:username' element={<Follows/>} exact/>

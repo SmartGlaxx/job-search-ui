@@ -338,18 +338,24 @@ const unfollow =async(e, id, followedUsername)=>{
 
 }
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
     return <>
     <Topbar />
     <Sidebar />
     <Backdrop />
     <Grid className='follows' container > 
-        <Grid className='' item xs ={false} sm={false} md={2} >
+        <Grid className='follows-mobile-disabled' item  sm={false} md={3} >
         <LeftNavigation />   
         </Grid> 
-            <Grid className='follows-center' xs={12} item sm={12} md={10} > 
+            <Grid className='follows-center' item xs={12} sm={12} md={6}  > 
             <h2>Follows</h2>
-            <h4>Followers (People following you)({userFollowers.length})</h4><br />
+            <h4>Followers (People following you)({userFollowers.length})</h4>
+            <hr />
+            <br />
             <div className='follows-center-inner' >
             {
             tempAllUsers &&
@@ -357,7 +363,7 @@ const unfollow =async(e, id, followedUsername)=>{
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followers} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
                         if(allUser._id !== _id && currentUserParsed && userFollowers.includes(allUser._id)) {
-                        return <div key={id} className='follows-box'>
+                        return <div key={id} className='follow-page-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} className="follows-img"/>
                             </Link>
@@ -367,7 +373,10 @@ const unfollow =async(e, id, followedUsername)=>{
                 })
             }
             </div>
+            <br />
+            
             <h4>Followings (People you Follow)({userFollowings.length}) </h4>
+            <hr />
             <br />
             <div className='follows-center-inner' >
             {

@@ -82,7 +82,10 @@ useEffect(()=>{
     fetchUsers(`https://smart-job-search.herokuapp.com/api/v1/user`)
 },[newAllMessages, userUniqueIds])
 
-
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 if(loading || allUsers.length == 0 || !currentUserParsed._id){
     return <div style={{width: "100%",height : "100vh", 
@@ -97,10 +100,10 @@ if(loading || allUsers.length == 0 || !currentUserParsed._id){
         <Sidebar />
         <Backdrop />
         <Grid container>
-            <Grid item xs={false} sm={2} className="">
+            <Grid item xs={false} sm={3} md={3} className='inbox-mobile-disabled'>
                 <LeftNavigation />
             </Grid>
-            <Grid item xs={12} sm={8} className="inbox-center">
+            <Grid item  xs={12} sm={6} md={6} className="inbox-center">
                 <div className='inbox-center-search'>
                     <FaSearch className='icons2' />
                     <input type='search' className='message-search' placeholder='Search Messages'/>
@@ -136,7 +139,7 @@ if(loading || allUsers.length == 0 || !currentUserParsed._id){
                    }
                 </div>
             </Grid>
-            <Grid item xs={false} sm={2} className="inbox-right">
+            <Grid item sm={false} md={3} className="inbox-right inbox-mobile-disabled">
                 <Ads />
             </Grid>
         </Grid>

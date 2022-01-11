@@ -82,3 +82,9 @@ background-color: var(--preview-background);
     background: linear-gradient(to top, rgba(40, 41, 56, 0.733),rgba(242, 244, 253, 0.15), rgba(242, 244, 253, 0.15), rgba(242, 244, 253, 0.15))
 }
 
+
+@media screen and (max-width: 940px){
+    .ad-container{
+        display: none;   
+    }
+}

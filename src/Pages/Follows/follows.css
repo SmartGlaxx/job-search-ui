@@ -1,6 +1,9 @@
+.mobile-disabled{
+    display: none;
+}
 .follows{
     display: flex;
-    color: var(--color4);
+    color: var(--color-7);
     
 }
 .follows-left{
@@ -8,6 +11,7 @@
 }
 .follows-center{
     padding: var(--section-padding);
+    background: var(--background-color-2) ;
 }
 .follows-center-inner{
     display: flex;
@@ -20,21 +24,24 @@
     width: 100%;
 }
 .follow-page-box{
+    position: relative;
     width: 6rem;
     margin: 0 0.2rem;
-    position: relative;
-    /* background: green; */
+    background: var(--background-color-9);
+    border-radius: 4%;
+    padding: 0.3rem;
 }
 .follows-img{
-    border-radius: 10%;
     width: 6rem;
     height: 6rem;
     /* margin:0.3rem; */
     object-fit: cover;
 }
+
 .follows-name{
-    position: absolute;
-    color:var(--color4);
+    text-transform: capitalize;
+    padding-left: 0.3rem;
+    color:var(--color3);
     top: 6.5rem;
     width: auto;
     opacity: 0.8;
@@ -45,19 +52,19 @@
     text-overflow: ellipsis;
 }
 .follow-page-btn{
-    width: 6rem;
+    bottom: 0.5rem;
     cursor: pointer;
+    color: var(--color-7);
     padding: var(--btn-padding);
-    background: var( --button-background);
+    background: var( --background-color-2);
     font-size: var(--connections-fontsize);
-    position: absolute;
-    left: 0rem;
-    bottom:1.2rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    /* margin-left: 0.8rem; */
     border: 1px solid var(--background-color-2);
     border-radius: 0 0 0.3rem 0.3rem;
 }
 .follows-btn2{
-    /* position: absolute; */
     bottom: 0.5rem;
     cursor: pointer;
     padding: var(--btn-padding-4);
@@ -101,4 +108,13 @@
 }
 .follows-response{
     display: flex;
+}
+.mobile-disabled{
+    background: red;
+}
+@media screen and (max-width: 600px){
+    .follows-mobile-disabled{
+        display: none;
+        
+    }
 }

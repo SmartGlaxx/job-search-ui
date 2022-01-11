@@ -1,12 +1,18 @@
 *{
     margin: 0;
-    padding: 0
+    padding: 0;
+    font-family: roboto;
 }
 :root{
     --background-color : #f4f4f4;
     --background-color-2 : #ffffff;
     --background-color-3 : #e7e7dd;
     --background-color-4 : linear-gradient(to top, rgb(28, 30, 32), rgba(197, 197, 206, 0.3));
+    --background-color-5 : #163a5f;
+    --background-color-6 : #10375c;
+    --background-color-7 : #1d566e;
+    --background-color-8 : #335;
+    --background-color-9 : #243eb3;
     --border-color  : rgb(30,40,50);
     --border-color-2 : rgba(30, 40, 50, 0.527);
     --box-border-radius: 0.5rem;

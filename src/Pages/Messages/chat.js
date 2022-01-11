@@ -301,12 +301,7 @@ useEffect(()=>{
 }, [])
 
 
-// setTimeout(() => {
-//     // const elmnt = document.getElementById("content");
-//     // elmnt.scrollIntoView();   
-//     setScrollIntoViewValue(false)
-// }, 3000);
-
+//scroll into view
 useEffect(()=>{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     const scrollIntoViewFunc = ()=>{
         setTimeout(() => {
@@ -317,6 +312,10 @@ useEffect(()=>{
     scrollIntoViewFunc()
 },[scrollIntoViewValue])
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 if(loggedIn == false){
     return window.location.href = '/login'
@@ -346,7 +345,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                 </div>
                 </Grid>
             }
-            <Grid item xs={false} sm={3} className="">
+            <Grid item xs={false} sm={3} className='chat-mobile-disabled'>
                 <LeftNavigation />
             </Grid>
             <Grid item xs={12} sm={6} className="chats-container" >
@@ -397,7 +396,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
 
 
             </Grid>
-         <Grid item xs={false} sm={3} className="chat-right">
+         <Grid item xs={false} sm={3} className="chat-right chat-mobile-disabled" >
             <Ads /> 
         </Grid>
     </Grid>

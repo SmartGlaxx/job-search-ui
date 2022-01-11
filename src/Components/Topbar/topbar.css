@@ -97,11 +97,20 @@
     display: grid;
     place-items: center;
 }
-.topCenter-li:hover{
-    background: var(--background-color);
+.topCenter-li-active{
+    background: var(--background-color-9);
+    text-decoration: none;
+    padding: var(--icon-li-padding);
+    width: 100%;
+    display: grid;
+    place-items: center;
 }
 .icons{
     color: var(--color);
+    width : var(--icon-size1);
+}
+.icons-active{
+    color: var(--color-3);
     width : var(--icon-size1);
 }
 .topCRight{

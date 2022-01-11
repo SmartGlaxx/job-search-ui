@@ -215,12 +215,16 @@ useEffect(()=>{
 setRandomUsers(allUsers)
 },[allUsers])
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+}, [])
 
 let userSentConnectionRequests = currentUserParsed.sentConnectionRequests ? currentUserParsed.sentConnectionRequests : []
 let userReceivedConnectionRequests = currentUserParsed.receivedConnectionRequests ? currentUserParsed.receivedConnectionRequests : []
 let userConnections = currentUserParsed.connections ? currentUserParsed.connections : []
 
-console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequests, currentUserParsed)
+
     const sentConnectionRequestsArray =  allUsers.filter(user =>{
         if(currentUserParsed.sentConnectionRequests){
             if(currentUserParsed.sentConnectionRequests.includes(user._id)){
@@ -249,25 +253,27 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
         }
         })        
 
-        // console.log('connectionRequestsArray', connectionRequestsArray )
+
     return <>
     <Topbar />
     <Sidebar />
     <Backdrop />
     <Grid className='connections' container > 
-        <Grid className='' item xs ={false} sm={false} md={2} >
+        <Grid className='connections-mobile-disabled' item  sm={false} md={3} >
         <LeftNavigation />   
         </Grid> 
-            <Grid className='connections-center' xs={12} item sm={12} md={10} > 
+            <Grid className='connections-center' item xs={12} sm={12} md={6} > 
             <h2>Connections</h2>
-            <h4>People you can connect with</h4><br />
+            <h4>People you can connect with</h4>
+            <hr />
+            <br />
             <div className='connections-center-inner' >
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
-                        if(allUser._id !== _id && currentUserParsed && !currentUserParsed.connections.includes(allUser._id) && !currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
+                        if(allUser._id !== _id && currentUserParsed.connections && !currentUserParsed.connections.includes(allUser._id) && !currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} alt={firstname} className="connections-img"/>
@@ -292,6 +298,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             <button className='more-btn' onClick={()=>setRandomUsers(allUsers)}>Find Random Users</button>
             </div>
             <h4> Received Connection Requests ({userReceivedConnectionRequests.length})</h4>
+            <hr />
             <br />
         <div className='connections-center-inner' >
             {
@@ -299,7 +306,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             tempAllUsers.map(allUser => {
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
-                        if(allUser._id !== _id && currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
+                        if(allUser._id !== _id && currentUserParsed.receivedConnectionRequests && currentUserParsed.receivedConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
@@ -311,7 +318,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                                 <button onClick={(e)=>acceptConnectRequest(e, id, username)} className='connect-btn2'>
                                     Accept
                                 </button>
-                                <button onClick={(e)=>declineConnectRequest(e, id, username)} className='connect-btn2'>
+                                <button onClick={(e)=>declineConnectRequest(e, id, username)} className='connect-btn'>
                                     Decline
                                 </button>
                                 </div>
@@ -322,13 +329,15 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             }
             </div>
              <h4> Sent Connection Requests ({userSentConnectionRequests.length})</h4>
+             <hr />
+            <br />
             <div className='connections-center-inner' >
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
-                        if(allUser._id !== _id && currentUserParsed.sentConnectionRequests.includes(allUser._id)){
+                        if(allUser._id !== _id && currentUserParsed.sentConnectionRequests && currentUserParsed.sentConnectionRequests.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
@@ -336,7 +345,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
-                                <button onClick={(e)=>connectRequest(e, id, username)} className='connect-btn3'>
+                                <button onClick={(e)=>connectRequest(e, id, username)} className='connect-btn'>
                                     Cancel
                                 </button>
                             </form>
@@ -346,13 +355,15 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
             }
             </div>
             <h3>Connections ({connectionsArray.length})</h3>
+            <hr />
+            <br />
              <div className='connections-center-inner' >
             {
             tempAllUsers &&
             tempAllUsers.map(allUser => {
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, connections} = currentUserParsed.connections ? currentUserParsed : JSON.parse(currentUser)
-                        if(allUser._id !== _id && currentUserParsed.connections.includes(allUser._id)){
+                        if(allUser._id !== _id && currentUserParsed.connections && currentUserParsed.connections.includes(allUser._id)){
                         return <div key={id} className='connetions-box'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} alt={username} className="connections-img"/>
@@ -360,7 +371,7 @@ console.log('now par',userSentConnectionRequests,  userReceivedConnectionRequest
                             <div className='connections-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
-                                <button onClick={(e)=>disconnectRequest(e, id, username)} className='connect-btn3'>
+                                <button onClick={(e)=>disconnectRequest(e, id, username)} className='connect-btn'>
                                     Disconnect
                                 </button>
                             </form>

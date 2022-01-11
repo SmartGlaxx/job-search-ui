@@ -384,6 +384,7 @@
     position: relative;
     font-size: 0.9rem;
     color: var(--color2);
+    overflow: hidden;
 }
 
 .follow-btn{

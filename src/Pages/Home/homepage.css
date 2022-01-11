@@ -1,6 +1,4 @@
-.homepage{
-    display: flex;
-}
+
 .homepage-left{
     flex : 3;
     position: sticky;
@@ -55,10 +53,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     justify-content: space-around;
     padding: var(--input-padding2);
     position: relative;
+    box-sizing: border-box;
 }
 .homepage-center-top-hr{
     width: 90%;
@@ -66,15 +65,15 @@
 }
 .homepage-center-input{
     font-size: 1.1rem;
-    width:70%;
+    width: 70%;
     border: none;
     margin-left: 4rem; 
     background: var(--background-color-2);
-    
+    box-sizing: border-box;
 }
 .homepage-center-input-2{
     font-size: 1.1rem;
-    width: 90%;
+    width: 100%;
     padding: var(--input-padding);
     border: none;
     border-radius: 0.3rem 0.3rem 0 0;
@@ -103,9 +102,9 @@
     margin-top: 1rem;
     cursor: pointer;
 }
-.homepage-center-input-icon{
+.homepage-center-post-icon{
     margin-right: 0.4rem;
-    color: var(--color-success )
+    color: var(--color-7)
 }
 .homepage-center-input-icon-close{
     margin-right: 0.4rem;
@@ -113,7 +112,7 @@
 }
 .homepage-center-input-icon-picture{
     margin-right: 0.4rem;
-    color: var(--color-picture-icon)
+    color: var(--color-7)
 }
 .homepage-center-input:focus{
     outline: none;
@@ -260,6 +259,15 @@
     margin-left: 0.5rem;
 }
 
+@media screen and (max-width: 940px){
+    .homepage-mobile-disabled{
+        display: hidden;   
+    }
+    .homepage-left, .homepage-right{
+        display: none;
+    }
+}
+
 @media screen and (max-width : 600px){
     .homepage-left, .homepage-right{
         display: none;
@@ -267,4 +275,27 @@
     .homepage-center{
         width: 100%;
     }
+    .homepage-mobile-disabled{
+        display: none;
+    }
 }
+
+@media screen and (max-width : 400px){
+    .homepage-center-top-inner2{
+        width: 100%;
+        padding: 0.2rem 0.3rem;
+        align-items: center; 
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width : 360px){
+    .homepage-center-input{
+        width: 60%;
+    }
+}
+
+
+
+

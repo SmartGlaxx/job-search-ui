@@ -99,7 +99,7 @@ if(loading){
         {
             alertMsg.status && <div style={{position:"absolute", top:"20vh", background:"red", height : "40rem", width:"39rem"}}>ALERT</div> 
         }
-        <div className='users-box'>
+        <div className='other-users-box'>
         {
             tempAllUsers.length == 0 ? 
             <div style={{width: "100%",height : "7rem", 
@@ -110,12 +110,12 @@ if(loading){
                 const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followings} = currentUserParsed.followings ? currentUserParsed : JSON.parse(currentUser)
                       if(allUser._id !== _id && !followings.includes(allUser._id)){
-                        return <div key={id} className='otherUsers-inner'>
+                        return <div key={id} className='other-users-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
                                 <img src={profilePicture ? profilePicture : ProfileImage} 
-                                 className="follow-img" style={{width:"6rem"}}/>
+                                 className="others-img" style={{width:"6rem"}}/>
                             </Link>
-                            <div className='folow-name'>{`${firstname} ${lastname}`}</div>
+                            <div className='others-name'>{`${firstname} ${lastname}`}</div>
                             <form>
                                 <br/>
                                 <button onClick={(e)=>follow(e, id, username)} className='follow-btn'>{ newUserFollowings.includes(allUser._id) ? `Followed` : `Follow`}</button>

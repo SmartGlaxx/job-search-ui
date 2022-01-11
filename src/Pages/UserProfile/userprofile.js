@@ -623,6 +623,11 @@ useEffect(()=>{
     const event = window.addEventListener('scroll', fetchItems)
     return ()=> window.removeEventListener('scroll', event)
 },[])
+
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
  
 if(loggedIn == false){
     return window.location.href = '/login'
@@ -737,7 +742,7 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
                             currentUserParsed.sentConnectionRequests.includes(userId)) &&
                             <Button onClick={(e)=>connectRequest(e, id, username)} className='btn'>Cancel Request</Button>
                         } 
-                    { currentUserParsed && currentUserParsed.connections.includes(userId) &&
+                    { currentUserParsed.connections && currentUserParsed.connections.includes(userId) &&
                     <Button className='btn' onClick={(e)=>disconnectRequest(e, userId, userUsername)}>Disconnect</Button>}
                         <Link to={ `/chat/${idCurrent}/${usernameCurrent}/${userId}/${userUsername}`} >
                             <Button className='btn'>Send Message</Button>
@@ -783,12 +788,12 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
             </div>:
                fetchedUser ?
             allUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followings} = fetchedUser
                       if(allUser._id !== _id && followings.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follow-img" style={{width:"6rem"}}/>
+                                <img src={profilePicture ? profilePicture : ProfileImage}  className="follow-img" style={{width:"6rem"}}/>
                             </Link>
                             <div className='follow-name'>{`${firstname} ${lastname}`}</div>
                             <form>
@@ -813,12 +818,12 @@ const usernameCapitalized = firstLetter.toUpperCase() + otherLettes
             </div>:
                fetchedUser ?
             allUsers.map(allUser => {
-                const {_id : id, username, firstname, lastname} = allUser
+                const {_id : id, username, firstname, lastname, profilePicture} = allUser
                 const {_id, followers} = fetchedUser
                       if(allUser._id !== _id && followers.includes(allUser._id)){
                         return <div key={id} className='otherUsers-inner'>
                             <Link to={`/userprofile/${allUser._id}/${username}`} onClick={()=>setUserClicked(!userClicked)}>
-                                <img src={Profile} alt={username} className="follow-img" style={{width:"6rem"}}/>
+                                <img src={profilePicture ? profilePicture : ProfileImage}  className="follow-img" style={{width:"6rem"}}/>
                             </Link>
                             <div className='follow-name'>{`${firstname} ${lastname}`}</div>
                             <form>

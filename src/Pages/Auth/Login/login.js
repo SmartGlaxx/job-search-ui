@@ -73,6 +73,11 @@ const Login =()=>{
             }
     }
 
+//scroll to top of page
+useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
     if(loading){
         return <div style={{width: "100%",height : "100vh", 
         display: 'grid', placeItems: "center"}}>
