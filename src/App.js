@@ -13,13 +13,13 @@ function App() {
           <Route path='/login' element={<Login/>} exact/>
          <Route path='/' element={<HomePage/>} exact/>
          {/* <Route path='/' element={<HomePageRedirect/>} exact/> */}
-         <Route path='/userprofile/:id/:username' element={<UserProfile/>} exact/>
+         {/* <Route path='/userprofile/:id/:username' element={<UserProfile/>} exact/>
          <Route path='/connections/:id/:username' element={<Connections/>} exact/>
          <Route path='/follows/:id/:username' element={<Follows/>} exact/>
          <Route path='/composemessage' element={<ComposeMessages/>} exact/>
          <Route path='/chat/:userId/:userUsername/:id/:otherUsername' element={<Chat/>} exact/>
          <Route path='/inbox' element={<Inbox/>} exact/>
-         <Route path='*' element={<ErrorPage/>} exact/>
+         <Route path='*' element={<ErrorPage/>} exact/> */}
        </Routes>
     </Router>
     </>

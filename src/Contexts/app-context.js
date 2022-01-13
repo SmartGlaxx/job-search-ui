@@ -16,7 +16,7 @@ const SCROLLINTOVIEW = "SCROLLINTOVIEW" ; const SETSEARCHTERM = "SETSEARCHTERM"
 const getLoggedIn = ()=>{
     let value
     if(localStorage.getItem('LoggedIn')){
-        return  value = Boolean(localStorage.getItem('LoggedIn'))
+        return  value = true
     }else{
         return value = false
     }
@@ -75,20 +75,21 @@ const initialState = {
 
 export const AppProvider = ({children})=>{
     const [state, dispatch] = useReducer(reducer, initialState)
-//     const allUsersUrl = "https://smart-job-search.herokuapp.com/api/v1/user"
-//     const posturl = 'https://smart-job-search.herokuapp.com/api/v1/posts'
+    console.log('fofpfpfp', state.allUsers, state.loggedIn)
+    const allUsersUrl = "https://smart-job-search.herokuapp.com/api/v1/user"
+    // const posturl = 'https://smart-job-search.herokuapp.com/api/v1/posts'
 
-//     useEffect(()=>{
-//         console.log('smart search state', state.searchTerm)
+    // useEffect(()=>{
+    //     console.log('smart search state', state.searchTerm)
 
-//     },[state.searchTerm])
-//     //SET LOADING 
-//     const setLoading =(value)=> {
-//     //    console.log('LOADING')
-//             dispatch({type : LOADING, payload : value})
-//      }
+    // },[state.searchTerm])
+    //SET LOADING 
+    const setLoading =(value)=> {
+    //    console.log('LOADING')
+            dispatch({type : LOADING, payload : value})
+     }
 
-//     //FETCH TIME-LINE POSTS
+    //FETCH TIME-LINE POSTS
 //     const fetchTimelinePosts = async(url)=>{
       
 //         const options = {
@@ -157,31 +158,31 @@ export const AppProvider = ({children})=>{
 //     }
 
 //     //FETCH ALL USERS
-//     const fetchAllUsers = async(url)=>{
-//     // dispatch({type : LOADING, payload : true})
-//     await Axios(url).then(result =>{
+    const fetchAllUsers = async(url)=>{
+    // dispatch({type : LOADING, payload : true})
+    await Axios(url).then(result =>{
     
-//         const {response} = result.data
+        const {response} = result.data
         
-//         if(response == 'Success'){
-//             ///dispatch({type : LOADING, payload : false})
-//             const {usersData} = result.data
-//             dispatch({type : ALLUSERS, payload : usersData})
-//         }else if(response == 'Fail'){
-//             //dispatch({type : LOADING, payload : false})
-//             dispatch({type: ALERT, payload : "An error occured fetching other users"})
-//         }
-//     })
+        if(response == 'Success'){
+            ///dispatch({type : LOADING, payload : false})
+            const {usersData} = result.data
+            dispatch({type : ALLUSERS, payload : usersData})
+        }else if(response == 'Fail'){
+            //dispatch({type : LOADING, payload : false})
+            dispatch({type: ALERT, payload : "An error occured fetching other users"})
+        }
+    })
         
-//     }
+    }
 
 //     //FETCH ALL USERS USEEFFECT
-//     useEffect(()=>{
-//         // if(state.timelineposts.length == 0){
-//                 fetchAllUsers(allUsersUrl) 
-//         // }
+    useEffect(()=>{
+        // if(state.timelineposts.length == 0){
+                fetchAllUsers(allUsersUrl) 
+        // }
        
-//     },[state.testValue, state.postcreated])
+    },[state.testValue, state.postcreated])
 
 //     //FETCH ALL USERS WHEN MORE BUTTON IS CLICKED
 //     const setTempAllusers = (value)=>{
@@ -189,13 +190,13 @@ export const AppProvider = ({children})=>{
 //     }
 
 //     //SET CURRENT USER
-//    const setCurrentUser = (value)=>{
+   const setCurrentUser = (value)=>{
       
-//         localStorage.setItem('CurrentUser',JSON.stringify(value))
-//     //    localStorage.setItem('UserFollowings', JSON.stringify(value.followings))
-//         //dispatch({type : CURRENTUSER, payload : value})
-//     //    dispatch({type : SETCUSERFOLLOWINGS, payload : value.followings})
-//     }
+        localStorage.setItem('CurrentUser',JSON.stringify(value))
+    //    localStorage.setItem('UserFollowings', JSON.stringify(value.followings))
+        //dispatch({type : CURRENTUSER, payload : value})
+    //    dispatch({type : SETCUSERFOLLOWINGS, payload : value.followings})
+    }
 
 // //    //SET USERDATA WHEN CHAGES OCCURS - LIKE FOLLOWING / UNFOLLOWING
 //     const setNewCurrentUser = (value)=>{
@@ -242,15 +243,15 @@ export const AppProvider = ({children})=>{
 //    },[state.currentUser,state.testValue])
 
 //    //SET LOGGED-IN
-//    const setLoggedIn =(value)=>{
-//        if(value == true){
-//         localStorage.setItem('LoggedIn',"true")
-//        }else if(value == false){
-//         localStorage.setItem('LoggedIn',"false")
-//        }
+   const setLoggedIn =(value)=>{
+       if(value == true){
+        localStorage.setItem('LoggedIn',"true")
+       }else if(value == false){
+        localStorage.setItem('LoggedIn',"false")
+       }
          
-//        dispatch({type : LOGGEDIN, payload : value})
-//    }
+       dispatch({type : LOGGEDIN, payload : value})
+   }
 
 //    //OPEN SIDE BAR
 //    const openSidebar = ()=>{
@@ -309,8 +310,8 @@ export const AppProvider = ({children})=>{
 // }
 
     return <AppContext.Provider value={{
-        ...state, 
-        // setLoading, setLazyLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, 
+        ...state,  setLoading, setCurrentUser, setLoggedIn
+        // setLazyLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, 
         // setTempAllusers, setPostCreated, openSidebar, setUserClicked, setFetchedUser, 
         // setTimelinePosts, setCommentSent,  setTestValue, setChatUser, setReplySent, setScrollIntoViewValue,
         // setSearchTermValue

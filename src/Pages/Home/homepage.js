@@ -350,7 +350,7 @@ const {_id : idCurrent , username : usernameCurrent} = currentUserParsed
                     {/* <LoadingIcons.Puff  stroke="#555" strokeOpacity={.9} /> */}
                     <>
                 <h5 className='other-users-header'>No posts yet. Follow other users and create posts</h5> 
-                    <OtherUsers />
+                    {/* <OtherUsers /> */}
                 <h5 className='people-you-know' >People you may know</h5> 
                 </>
                 </div> 
