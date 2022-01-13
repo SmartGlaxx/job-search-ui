@@ -75,244 +75,245 @@ const initialState = {
 
 export const AppProvider = ({children})=>{
     const [state, dispatch] = useReducer(reducer, initialState)
-    const allUsersUrl = "https://smart-job-search.herokuapp.com/api/v1/user"
-    const posturl = 'https://smart-job-search.herokuapp.com/api/v1/posts'
+//     const allUsersUrl = "https://smart-job-search.herokuapp.com/api/v1/user"
+//     const posturl = 'https://smart-job-search.herokuapp.com/api/v1/posts'
 
-    useEffect(()=>{
-        console.log('smart search state', state.searchTerm)
+//     useEffect(()=>{
+//         console.log('smart search state', state.searchTerm)
 
-    },[state.searchTerm])
-    //SET LOADING 
-    const setLoading =(value)=> {
-    //    console.log('LOADING')
-            dispatch({type : LOADING, payload : value})
-     }
+//     },[state.searchTerm])
+//     //SET LOADING 
+//     const setLoading =(value)=> {
+//     //    console.log('LOADING')
+//             dispatch({type : LOADING, payload : value})
+//      }
 
-    //FETCH TIME-LINE POSTS
-    const fetchTimelinePosts = async(url)=>{
+//     //FETCH TIME-LINE POSTS
+//     const fetchTimelinePosts = async(url)=>{
       
-        const options = {
-            url: url,
-            method : "GET",
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json;charset=UTF-8"
-            }
-        }
-       // dispatch({type : LOADING, payload : true})
+//         const options = {
+//             url: url,
+//             method : "GET",
+//             headers : {
+//                 "Accept" : "application/json",
+//                 "Content-Type" : "application/json;charset=UTF-8"
+//             }
+//         }
+//        // dispatch({type : LOADING, payload : true})
        
-        const result = await Axios(options)
-        const {response, allPosts} = result.data
-        if(response == 'Success' && allPosts){
-           const newTimelinePosts = allPosts.sort((a,b)=>{
-               return new Date(b.createdAt) - new Date(a.createdAt)
-           })
-            dispatch({type : TIMELINEPOSTS, payload : newTimelinePosts})
-        }else if(response == 'Fail'){
-            dispatch({type: ALERT, payload : "An error occured"})
-        }
+//         const result = await Axios(options)
+//         const {response, allPosts} = result.data
+//         if(response == 'Success' && allPosts){
+//            const newTimelinePosts = allPosts.sort((a,b)=>{
+//                return new Date(b.createdAt) - new Date(a.createdAt)
+//            })
+//             dispatch({type : TIMELINEPOSTS, payload : newTimelinePosts})
+//         }else if(response == 'Fail'){
+//             dispatch({type: ALERT, payload : "An error occured"})
+//         }
         
-    }
-    // console.log('joler ', state.timelineposts )
-    // const checkeUser = state.currentUser
+//     }
+//     // console.log('joler ', state.timelineposts )
+//     // const checkeUser = state.currentUser
     
-    // console.log(con._id)
+//     // console.log(con._id)
    
     
-    //FETCH TIME-LINE POSTS USEEFFECT
-    useEffect(()=>{
+//     //FETCH TIME-LINE POSTS USEEFFECT
+//     useEffect(()=>{
        
-        // setInterval(()=>{
+//         // setInterval(()=>{
           
-            const checkeUser = state.currentUser
-            let parsedCheckeUser = ''
+//             const checkeUser = state.currentUser
+//             let parsedCheckeUser = ''
             
-            //CHECK IF CURRENTUSER IS IN LOCALSTORAGE
+//             //CHECK IF CURRENTUSER IS IN LOCALSTORAGE
 
-            if(JSON.parse(checkeUser)._id !== null){
-                parsedCheckeUser = JSON.parse(checkeUser)
-               let {_id, username} = parsedCheckeUser
-                fetchTimelinePosts(`${posturl}/${_id}/${username}/timeline`)
-             }
-             if(state.currentUser._id !== null){
-               return parsedCheckeUser = state.currentUser 
-               let {_id, username} = parsedCheckeUser
-                fetchTimelinePosts(`${posturl}/${_id}/${username}/timeline`)
-             }
+//             if(JSON.parse(checkeUser)._id !== null){
+//                 parsedCheckeUser = JSON.parse(checkeUser)
+//                let {_id, username} = parsedCheckeUser
+//                 fetchTimelinePosts(`${posturl}/${_id}/${username}/timeline`)
+//              }
+//              if(state.currentUser._id !== null){
+//                return parsedCheckeUser = state.currentUser 
+//                let {_id, username} = parsedCheckeUser
+//                 fetchTimelinePosts(`${posturl}/${_id}/${username}/timeline`)
+//              }
              
             
-            // }else{
-            //     let _id = '';
-            //     let username = '';
-            //     fetchTimelinePosts(`${posturl}/${_id}/${username}`)
-           //  }
-        //}, 10000)       
-    },[state.postcreated, state.userClicked])
+//             // }else{
+//             //     let _id = '';
+//             //     let username = '';
+//             //     fetchTimelinePosts(`${posturl}/${_id}/${username}`)
+//            //  }
+//         //}, 10000)       
+//     },[state.postcreated, state.userClicked])
 
 
-    //FETCH OTHER USER TIMELINE POSTS
+//     //FETCH OTHER USER TIMELINE POSTS
 
-    const setTimelinePosts = (value)=>{
-        dispatch({type : TIMELINEPOSTS, payload : value})
-    }
-
-    //FETCH ALL USERS
-    const fetchAllUsers = async(url)=>{
-    // dispatch({type : LOADING, payload : true})
-    await Axios(url).then(result =>{
-    
-        const {response} = result.data
-        
-        if(response == 'Success'){
-            ///dispatch({type : LOADING, payload : false})
-            const {usersData} = result.data
-            dispatch({type : ALLUSERS, payload : usersData})
-        }else if(response == 'Fail'){
-            //dispatch({type : LOADING, payload : false})
-            dispatch({type: ALERT, payload : "An error occured fetching other users"})
-        }
-    })
-        
-    }
-
-    //FETCH ALL USERS USEEFFECT
-    useEffect(()=>{
-        // if(state.timelineposts.length == 0){
-                fetchAllUsers(allUsersUrl) 
-        // }
-       
-    },[state.testValue, state.postcreated])
-
-    //FETCH ALL USERS WHEN MORE BUTTON IS CLICKED
-    const setTempAllusers = (value)=>{
-        dispatch({type : TEMPALLUSERS, payload : value})
-    }
-
-    //SET CURRENT USER
-   const setCurrentUser = (value)=>{
-      
-        localStorage.setItem('CurrentUser',JSON.stringify(value))
-    //    localStorage.setItem('UserFollowings', JSON.stringify(value.followings))
-        //dispatch({type : CURRENTUSER, payload : value})
-    //    dispatch({type : SETCUSERFOLLOWINGS, payload : value.followings})
-    }
-
-//    //SET USERDATA WHEN CHAGES OCCURS - LIKE FOLLOWING / UNFOLLOWING
-    const setNewCurrentUser = (value)=>{
-            localStorage.setItem('CurrentUser',JSON.stringify(value))
-            console.log(value)
-           // dispatch({type : SETNEWTEMPUSER, payload : value})
-           dispatch({type : CURRENTUSER, payload : value})
-    }
-//    useEffect(()=>{
-//        if(state.tempCurrentUser._id){
-//         setCurrentUser(state.tempCurrentUser)
-//        }else{
-//            return
-//        }
-//    },[state.tempCurrentUser])
-
-   const setPostCreated =(value)=>{
-        dispatch({type : POSTCREATED, payload : value})
-   }
-
-   const fetchCurrentUser=async(userUrl)=>{
-
-    const options = {
-        url: userUrl,
-        method : "GET",
-        headers : {
-            "Accept" : "application/json",
-            "Content-Type" : "application/json;cjarset=UTF-8"
-        }
-    }
-   
-    const result = await Axios(options)
-    const {response, data} = result.data
-        if(response == "Success" && data){
-            dispatch({type : CURRENTUSERPARSED , payload : data})
-            //return window.location.href = '/'
-        }else{
-            dispatch({type : CURRENTUSERPARSED , payload : {}})
-        }
-   }
-   useEffect(()=>{
-    const {_id, username} = JSON.parse(state.currentUser)
-    fetchCurrentUser(`http://smart-job-search.herokuapp.com/api/v1/user/${_id}/${username}`)
-   },[state.currentUser,state.testValue])
-
-   //SET LOGGED-IN
-   const setLoggedIn =(value)=>{
-       if(value == true){
-        localStorage.setItem('LoggedIn',"true")
-       }else if(value == false){
-        localStorage.setItem('LoggedIn',"false")
-       }
-         
-       dispatch({type : LOGGEDIN, payload : value})
-   }
-
-   //OPEN SIDE BAR
-   const openSidebar = ()=>{
-       dispatch({type : SETSIDEBAR})
-   }
-
-   //CHECK IF A USER PROFILE IS CLICKED
-   const setUserClicked =()=>{
-       dispatch({type : USERCLICKED})
-   }
-
-//SET OTHER USER
-const setFetchedUser = (value)=>{
-    dispatch({type : SETFETCHEDUSER, payload : value})
-}
-
-
-//TRIGGER COMMENT SENT
-const setCommentSent = (value)=>{
-    dispatch({type : COMMENTSENT, payload : value})
-}
-//FETCH OTHER USER USEEFECT
-// useEffect(()=>{
-//     const {id, username} = useParams()
-//     if(userId != id && username != userUsername){ 
-//         fetchUser(`https://smart-job-search.herokuapp.com/api/v1/user/${id}/${username}`)
+//     const setTimelinePosts = (value)=>{
+//         dispatch({type : TIMELINEPOSTS, payload : value})
 //     }
-// },[userClicked])
 
-const setTestValue = (value)=>{
-    dispatch({type : TESTVALUE, payload : value})
-}
+//     //FETCH ALL USERS
+//     const fetchAllUsers = async(url)=>{
+//     // dispatch({type : LOADING, payload : true})
+//     await Axios(url).then(result =>{
+    
+//         const {response} = result.data
+        
+//         if(response == 'Success'){
+//             ///dispatch({type : LOADING, payload : false})
+//             const {usersData} = result.data
+//             dispatch({type : ALLUSERS, payload : usersData})
+//         }else if(response == 'Fail'){
+//             //dispatch({type : LOADING, payload : false})
+//             dispatch({type: ALERT, payload : "An error occured fetching other users"})
+//         }
+//     })
+        
+//     }
 
-//SET LAZY-LOADING FOR POSTS
-const setLazyLoading = (value)=>{
-    dispatch({type : LAZYLOADING, payload : value})
-}
+//     //FETCH ALL USERS USEEFFECT
+//     useEffect(()=>{
+//         // if(state.timelineposts.length == 0){
+//                 fetchAllUsers(allUsersUrl) 
+//         // }
+       
+//     },[state.testValue, state.postcreated])
 
-//SET USERNAME FOR CHAT MATE
-const setChatUser = (value)=>{
-    dispatch({type : SETCHATUSERNAME, payload : value})
-}
+//     //FETCH ALL USERS WHEN MORE BUTTON IS CLICKED
+//     const setTempAllusers = (value)=>{
+//         dispatch({type : TEMPALLUSERS, payload : value})
+//     }
 
-const setReplySent = (value)=>{
-    dispatch({type : SETREPLYSENT, payload : value})
-}
+//     //SET CURRENT USER
+//    const setCurrentUser = (value)=>{
+      
+//         localStorage.setItem('CurrentUser',JSON.stringify(value))
+//     //    localStorage.setItem('UserFollowings', JSON.stringify(value.followings))
+//         //dispatch({type : CURRENTUSER, payload : value})
+//     //    dispatch({type : SETCUSERFOLLOWINGS, payload : value.followings})
+//     }
 
-//scroll-into-view function
-const setScrollIntoViewValue = (value)=>{
-    dispatch({type : SCROLLINTOVIEW, payload : value })
-}
+// //    //SET USERDATA WHEN CHAGES OCCURS - LIKE FOLLOWING / UNFOLLOWING
+//     const setNewCurrentUser = (value)=>{
+//             localStorage.setItem('CurrentUser',JSON.stringify(value))
+//             console.log(value)
+//            // dispatch({type : SETNEWTEMPUSER, payload : value})
+//            dispatch({type : CURRENTUSER, payload : value})
+//     }
+// //    useEffect(()=>{
+// //        if(state.tempCurrentUser._id){
+// //         setCurrentUser(state.tempCurrentUser)
+// //        }else{
+// //            return
+// //        }
+// //    },[state.tempCurrentUser])
 
-//set the search term
-const setSearchTermValue = (value)=>{    
-    dispatch({type : SETSEARCHTERM , payload : value})
-}
+//    const setPostCreated =(value)=>{
+//         dispatch({type : POSTCREATED, payload : value})
+//    }
+
+//    const fetchCurrentUser=async(userUrl)=>{
+
+//     const options = {
+//         url: userUrl,
+//         method : "GET",
+//         headers : {
+//             "Accept" : "application/json",
+//             "Content-Type" : "application/json;cjarset=UTF-8"
+//         }
+//     }
+   
+//     const result = await Axios(options)
+//     const {response, data} = result.data
+//         if(response == "Success" && data){
+//             dispatch({type : CURRENTUSERPARSED , payload : data})
+//             //return window.location.href = '/'
+//         }else{
+//             dispatch({type : CURRENTUSERPARSED , payload : {}})
+//         }
+//    }
+//    useEffect(()=>{
+//     const {_id, username} = JSON.parse(state.currentUser)
+//     fetchCurrentUser(`http://smart-job-search.herokuapp.com/api/v1/user/${_id}/${username}`)
+//    },[state.currentUser,state.testValue])
+
+//    //SET LOGGED-IN
+//    const setLoggedIn =(value)=>{
+//        if(value == true){
+//         localStorage.setItem('LoggedIn',"true")
+//        }else if(value == false){
+//         localStorage.setItem('LoggedIn',"false")
+//        }
+         
+//        dispatch({type : LOGGEDIN, payload : value})
+//    }
+
+//    //OPEN SIDE BAR
+//    const openSidebar = ()=>{
+//        dispatch({type : SETSIDEBAR})
+//    }
+
+//    //CHECK IF A USER PROFILE IS CLICKED
+//    const setUserClicked =()=>{
+//        dispatch({type : USERCLICKED})
+//    }
+
+// //SET OTHER USER
+// const setFetchedUser = (value)=>{
+//     dispatch({type : SETFETCHEDUSER, payload : value})
+// }
+
+
+// //TRIGGER COMMENT SENT
+// const setCommentSent = (value)=>{
+//     dispatch({type : COMMENTSENT, payload : value})
+// }
+// //FETCH OTHER USER USEEFECT
+// // useEffect(()=>{
+// //     const {id, username} = useParams()
+// //     if(userId != id && username != userUsername){ 
+// //         fetchUser(`https://smart-job-search.herokuapp.com/api/v1/user/${id}/${username}`)
+// //     }
+// // },[userClicked])
+
+// const setTestValue = (value)=>{
+//     dispatch({type : TESTVALUE, payload : value})
+// }
+
+// //SET LAZY-LOADING FOR POSTS
+// const setLazyLoading = (value)=>{
+//     dispatch({type : LAZYLOADING, payload : value})
+// }
+
+// //SET USERNAME FOR CHAT MATE
+// const setChatUser = (value)=>{
+//     dispatch({type : SETCHATUSERNAME, payload : value})
+// }
+
+// const setReplySent = (value)=>{
+//     dispatch({type : SETREPLYSENT, payload : value})
+// }
+
+// //scroll-into-view function
+// const setScrollIntoViewValue = (value)=>{
+//     dispatch({type : SCROLLINTOVIEW, payload : value })
+// }
+
+// //set the search term
+// const setSearchTermValue = (value)=>{    
+//     dispatch({type : SETSEARCHTERM , payload : value})
+// }
 
     return <AppContext.Provider value={{
-        ...state, setLoading, setLazyLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, 
-        setTempAllusers, setPostCreated, openSidebar, setUserClicked, setFetchedUser, 
-        setTimelinePosts, setCommentSent,  setTestValue, setChatUser, setReplySent, setScrollIntoViewValue,
-        setSearchTermValue
+        ...state, 
+        // setLoading, setLazyLoading, setCurrentUser, setLoggedIn, setNewCurrentUser, 
+        // setTempAllusers, setPostCreated, openSidebar, setUserClicked, setFetchedUser, 
+        // setTimelinePosts, setCommentSent,  setTestValue, setChatUser, setReplySent, setScrollIntoViewValue,
+        // setSearchTermValue
     }}>
     {children}
     </AppContext.Provider>

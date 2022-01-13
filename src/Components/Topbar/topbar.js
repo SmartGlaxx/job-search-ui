@@ -99,7 +99,7 @@ const Topbar =()=>{
     return <Grid className='topbarContainer' container>
         <Grid className="topLeft" item xs ={9} sm={3} >
             <div className='mainlogo'>
-                <Link to='/timeline' className='mainlogo-link'>SC</Link>
+                <Link to='/' className='mainlogo-link'>SC</Link>
             </div>
             <div style={{display:"block"}}>
             <div className='topLeft-inner'>
@@ -117,10 +117,10 @@ const Topbar =()=>{
         <Grid className="topCenter" item xs ={false} sm={5}>
             <div className="topCenter-inner">
                 <ul className="topCenter-ul">
-                    <Link to='/timeline'  className= "topCenter-li" >
+                    <Link to='/'  className= "topCenter-li" >
                         <li >
                             <FaHome 
-                            className= {window.location.href.indexOf("timeline") > -1 ? `icons-active` :`icons` }
+                            className= {window.location.pathname == '/' ? `icons-active` :`icons` }
                              size='25'/>
                         </li>
                     </Link>

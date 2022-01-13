@@ -342,7 +342,7 @@ const sharePost = async(url)=>{
 }
 
 const {_id : uId , username : userUsername} =  currentUserParsed
-    return <div className='posts' container > 
+    return <div className='posts' > 
                 {
                     error.status && <div className='errorNotice'><FaExclamationCircle />{error.msg}</div>
                 }  
@@ -409,7 +409,7 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                         horizontal: 'right',
                         }}
                     >
-                        <Typography className={classes.typography}>
+                        <div className={classes.typography}>
                         Comfirm Delete
                         <div className='delete-box-2' >
                             <form>
@@ -421,7 +421,7 @@ const {_id : uId , username : userUsername} =  currentUserParsed
                                 </Button>
                             </form>
                         </div>
-                        </Typography>
+                        </div>
                     </Popover>
                     
                 <div className='post-top'>

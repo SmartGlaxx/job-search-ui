@@ -20,7 +20,7 @@ const Search = ()=>{
             
             const {_id, firstname, lastname, username, profilePicture} = user
             return<Link to={`/userprofile/${_id}/${username}`} className="profile-link"
-             onClick={()=>setSearchTermValue('')}>
+             onClick={()=>setSearchTermValue('')} key={_id}>
                 <div className="search-result"> 
                 <div className="search-item-box">
                     <img src={profilePicture ? profilePicture : ProfileImage} className='search-img'/>

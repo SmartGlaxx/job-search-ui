@@ -39,9 +39,9 @@ const {_id, username, firstname, lastname} = currentUserParsed
      }
      
     return <div className={ sidebarOpen ? `sidebarContainer2` : `sidebarContainer1`}  >
-        <div className="sidebarTop " item xs ={9} sm={3}>
+        <div className="sidebarTop " xs ={9} sm={3}>
              <div className='sidebarlogo' onClick={openSidebar}>
-                <Link to='/timeline' className='mainlogo-link'>SC</Link>
+                <Link to='/' className='mainlogo-link'>SC</Link>
              </div>
             <FaWindowClose className='close-icon' size='25' onClick = {openSidebar}/>
         </div>
@@ -49,15 +49,14 @@ const {_id, username, firstname, lastname} = currentUserParsed
             <div className="sideTop-inner">
                 <ul className="sideTop-ul">
                      <li className="sideTop-li" onClick={openSidebar}>
-                    <Link to={`/userprofile/${_id}/${username}`} 
-                    className= {window.location.href.indexOf("timeline") > -1 ? `sideTop-li-inner-active` :`sideTop-li-inner ` }>
+                    <Link to={`/userprofile/${_id}/${username}`}  className= "sideTop-li-inner" >
                     <FaUserAlt className="icons"  size='15'/>
                         Profile 
                     </Link>
                     </li>
                     <li className="sideTop-li" onClick={openSidebar}>
-                    <Link to='/timeline' 
-                    className= {window.location.href.indexOf("timeline") > -1 ? `sideTop-li-inner-active` :`sideTop-li-inner ` }>
+                    <Link to='/' 
+                    className= {window.location.pathname == '/' ? `sideTop-li-inner-active` :`sideTop-li-inner ` }>
                     <FaHome className="icons"  size='15'/>
                     Home
                     </Link>

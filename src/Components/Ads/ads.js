@@ -6,8 +6,8 @@ let count  = 0
     return<div className="ad-container" >
         {addsData.map(item =>{
             count++
-            const {_id, name, img, desc} = item
-            return <div key={_id} className="ad-item">
+            const {id, name, img, desc} = item
+            return <div key={id} className="ad-item">
                 {
                          count < 2 && <div className="ad-item-inner">
                              <img src={img} alt={name} className="ad-img-1"/>

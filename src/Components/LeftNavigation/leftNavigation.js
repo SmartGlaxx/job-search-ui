@@ -31,8 +31,8 @@ const LeftNavigation = ()=>{
             </Link>
             </li>
             <li className='homepage-left-li'>
-              <Link to="/timeline" className="left-nav" >
-                <div className= {window.location.href.indexOf("timeline") > -1 ? `left-nav-inner-active` :`left-nav-inner` }
+              <Link to="/" className="left-nav" >
+                <div className= {window.location.pathname == '/' ? `left-nav-inner-active` :`left-nav-inner` }
                 ><FaHome />  Home</div>
             </Link>
             </li>
